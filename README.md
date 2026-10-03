@@ -56,6 +56,7 @@ Current Codex documentation lists `~/.agents/skills` for user skills and `.agent
 For a fresh user installation, from the directory containing this repository:
 
 ```sh
+git clone https://github.com/heise3/academic-deai.git
 mkdir -p ~/.agents/skills
 cp -R academic-deai ~/.agents/skills/academic-deai
 ```
@@ -78,8 +79,8 @@ PDF text extraction additionally needs Poppler `pdftotext`. DOCX extraction read
 
 ## Release and attribution
 
-[Publishing instructions](PUBLISHING.md) describe the local package and the remaining repository/license choices. No remote repository is created by this package.
+[Publishing instructions](PUBLISHING.md) describe the release workflow for [heise3/academic-deai](https://github.com/heise3/academic-deai). Installing this skill does not create or modify a remote repository.
 
 [MIT license](LICENSE) covers this project. [Third-party notices](THIRD_PARTY_NOTICES.md) identify the reviewed Humanizer commit and preserve its original MIT notice.
 
-A design review and scoped forward evaluation accompany this preparation. Read [validation status](docs/validation.md) for exactly what was executed and what remains untested.
+A design review and scoped forward evaluation accompany this release. Read [validation status](docs/validation.md) for exactly what was executed and what remains untested.

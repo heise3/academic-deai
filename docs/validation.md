@@ -18,7 +18,7 @@ A separate real control found that `content_lock --strict` can accept “A reduc
 
 ## Final release checks
 
-Portable package validation passed. Inherited text files were normalized for LF line endings and clean Git diffs; the affected style-audit suite then passed 21 tests. Archive verification and installation synchronization are recorded in the local release report after packaging. The local GitHub workflow is supplied for Python 3.10, 3.12, and 3.14. Its remote runs have not yet executed.
+Portable package validation passed. Inherited text files were normalized for LF line endings and clean Git diffs; the affected style-audit suite then passed 21 tests. Archive verification and installation synchronization are recorded in the local release report after packaging. The GitHub workflow checks Python 3.10, 3.12, and 3.14. Remote execution status is available in [GitHub Actions](https://github.com/heise3/academic-deai/actions); the local results above do not substitute for a successful remote run.
 
 ## Limits
 

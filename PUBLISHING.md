@@ -1,13 +1,13 @@
-# GitHub publication preparation
+# GitHub releases
 
 This directory is a standalone source repository for Academic DeAI 3.0.0. The release archive contains the directory and its runtime resources, excluding Git metadata, caches, private data, and local validation environments.
 
 ## Publication settings
 
-- Repository name: academic-deai; public visibility is recommended for this reusable skill.
+- Public repository: [heise3/academic-deai](https://github.com/heise3/academic-deai).
 - Project license: MIT, chosen under the maintainer's authorization.
 - Humanizer attribution and its original MIT notice are retained.
-- Intended destination: `heise3/academic-deai`, using the connected GitHub account. The origin URL is configured locally; no remote repository has been created or uploaded.
+- The repository publishes this self-contained skill and its validation resources. Keep private manuscripts and local execution artifacts outside the repository.
 
 ## Validate
 
@@ -21,18 +21,18 @@ git diff --check
 
 Review [validation.md](docs/validation.md) for the actual tested environments, independent evaluation, and unverified limits.
 
-## Publish when the destination is chosen
+## Publish a version
 
-If a new repository is desired, create an empty repository through GitHub or the authenticated GitHub CLI. Then use the actual URL:
+For a fresh local checkout without origin, configure the repository URL; then push the validated branch:
 
 ```sh
 git remote add origin https://github.com/heise3/academic-deai.git
 git push -u origin main
 ```
 
-This prepared local repository already has origin configured to that URL. For this copy, create the empty remote repository and run only the push command after publication is requested. For a fresh clone without origin, use the add command. Inspect an existing origin before replacing it.
+Clones already have origin. Inspect an existing origin before replacing it. Commit the intended release files and confirm the working tree is clean before pushing.
 
-After an authorized push, use the version from VERSION for a release tag and attach the validated archive if desired. The local CI workflow becomes active only after publication; local tests do not imply a GitHub Actions run.
+After the push, check the [GitHub Actions run](https://github.com/heise3/academic-deai/actions). Use the version from VERSION for a release tag and attach an archive verified against that commit. Local tests alone do not establish remote CI success.
 
 ## Release description
 
