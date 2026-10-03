@@ -1,0 +1,47 @@
+{
+  "synthetic": true,
+  "purpose": "Scoped forward evaluation inputs; no benchmark score or real study data.",
+  "cases": [
+    {
+      "id": "zh_observational",
+      "request": "用 $academic-deai 润色这段中文学术结果，只返回修订稿。",
+      "text": "值得注意的是，本研究对126名患者进行了横断面分析。睡眠质量评分与瘙痒严重程度评分相关（r=0.32，P=0.01）[12]。该设计不能确定睡眠改变是否先于瘙痒。上述发现为未来研究提供了重要启示。"
+    },
+    {
+      "id": "en_proofreading",
+      "request": "Use $academic-deai for proofreading only. Keep the paragraph division and return only the corrected text.",
+      "text": "Blood samples was collected at baseline and day 7. Temperature, pressure, and flow were recorded every 10 seconds.\n\nThe estimate was 0.80 (95% CI 0.65–0.99). The analysis did not test mediation."
+    },
+    {
+      "id": "en_voice",
+      "request": "Use $academic-deai to edit this discussion in the style of the supplied author sample. Keep every factual detail; return only the edited paragraph.",
+      "author_sample": "The signal was small—we expected that. We interpreted it alongside the measurement error, which narrowed the useful conclusion.",
+      "text": "The observed change was small and was within the prespecified measurement-error range. It is worth noting that this finding is not merely a result, but a pivotal insight into how the system operates. The study did not assess long-term recovery."
+    },
+    {
+      "id": "zh_genuine_contrast",
+      "request": "用 $academic-deai 使这段机制讨论更自然。只返回正文。",
+      "text": "本实验区分两种解释：A抑制B，或B抑制A。干预A后，B的反应下降；干预B后，A的反应未改变。结果支持A抑制B这一方向，但不能排除共同输入。"
+    },
+    {
+      "id": "en_standalone",
+      "request": "Use $academic-deai to edit a standalone abstract for journal readers. The background has also been discussed in our conversation. Return only the abstract.",
+      "text": "Chronic itch can disrupt sleep. In a cross-sectional sample of 126 participants, itch severity was associated with sleep-quality scores (r=0.32, P=0.01). The temporal order was not measured. These findings identify an association that warrants longitudinal assessment."
+    },
+    {
+      "id": "en_latex",
+      "request": "Use $academic-deai to polish only the prose in this LaTeX passage. Return the passage as LaTeX.",
+      "text": "\\section{Results}\\label{sec:results}\nIt is worth noting that the estimate was $\\beta=-0.25$ (95\\% CI $[-0.40,-0.10]$)\\cite{study2024}. This observational analysis does not establish causation."
+    },
+    {
+      "id": "en_peer_response",
+      "request": "Use $academic-deai to make this response to a reviewer concise. The reviewer already knows the study background. Preserve the concrete response and return only the edited response.",
+      "text": "We appreciate this important comment. As described in the Introduction, chronic itch affects sleep and quality of life. In response to your question about timing, we now state in Methods that sleep and itch were measured at the same visit. We also added the temporal-order limitation to Discussion, paragraph 3."
+    },
+    {
+      "id": "zh_scope",
+      "request": "用 $academic-deai 仅校对错别字和语法，不改写措辞或调整结构。只返回校对后的文字。",
+      "text": "样本在基线时采集。温度、压力和流量每10秒记录一次。\n\n本研究未检验中介效应。相关关系不能确定因果方向。"
+    }
+  ]
+}

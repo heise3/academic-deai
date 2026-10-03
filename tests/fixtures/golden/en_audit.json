@@ -1,0 +1,103 @@
+{
+  "tool": {
+    "name": "academic-prose-pattern-audit",
+    "version": "1.0.1",
+    "authorship_inference": false,
+    "detector_score_prediction": false,
+    "disclaimer": "Descriptive editorial signals only. This report does not determine AI authorship and does not predict detector scores."
+  },
+  "language": "en",
+  "counts": {
+    "characters": 190,
+    "tokens": 26,
+    "paragraphs": 2,
+    "sentences": 4
+  },
+  "length_variation": {
+    "paragraph_tokens": {
+      "count": 2,
+      "mean": 13.0,
+      "median": 13.0,
+      "stdev": 1.0,
+      "cv": 0.077,
+      "variation_signal": "insufficient_data",
+      "min": 12,
+      "max": 14
+    },
+    "sentence_tokens": {
+      "count": 4,
+      "mean": 6.5,
+      "median": 7.0,
+      "stdev": 0.87,
+      "cv": 0.133,
+      "variation_signal": "very_low_variation",
+      "min": 5,
+      "max": 7
+    }
+  },
+  "repetition": {
+    "sentence_openings": [
+      {
+        "opening": "the analysis begins",
+        "count": 2,
+        "example": "The analysis begins with a descriptive comparison."
+      }
+    ],
+    "paragraph_openings": [
+      {
+        "opening": "the analysis begins with",
+        "count": 2,
+        "example": "The analysis begins with a descriptive comparison. However, the evidence is observational."
+      }
+    ],
+    "repeated_ngrams": []
+  },
+  "formulaic_language": {
+    "stock_phrases": [],
+    "transitions": [
+      {
+        "term": "however",
+        "count": 2
+      }
+    ],
+    "hedges": [],
+    "boosters": [],
+    "triadic_list_candidate_count": 1,
+    "triadic_list_examples": [
+      {
+        "sentence": "However, it reports accuracy, precision, and recall."
+      }
+    ]
+  },
+  "punctuation": {
+    "em_or_en_dash": {
+      "count": 0,
+      "per_1000_tokens": 0.0
+    },
+    "semicolon": {
+      "count": 0,
+      "per_1000_tokens": 0.0
+    },
+    "colon": {
+      "count": 0,
+      "per_1000_tokens": 0.0
+    },
+    "parenthetical_pairs": {
+      "count": 0,
+      "per_1000_tokens": 0.0
+    }
+  },
+  "lexical": {
+    "unique_tokens": 18,
+    "type_token_ratio": 0.692,
+    "root_ttr": 3.53,
+    "note": "Length-sensitive descriptive metric; do not use as an authorship signal.",
+    "language_mode": "en"
+  },
+  "interpretation_rules": [
+    "Treat low variation or repeated patterns as review prompts, not proof of AI authorship.",
+    "Parallel structure may be appropriate in methods, results, legal analysis, and reporting standards.",
+    "Revise only when a pattern weakens meaning, evidence alignment, disciplinary style, or readability.",
+    "Do not introduce errors or random variation to change these metrics."
+  ]
+}

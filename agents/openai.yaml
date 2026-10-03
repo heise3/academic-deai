@@ -1,0 +1,4 @@
+interface:
+  display_name: "Academic DeAI 学术去 AI 腔"
+  short_description: "统一中英文学术润色、翻译与去模板化，保留事实、引文和长度约束"
+  default_prompt: "Use $academic-deai to edit this academic text naturally at the requested depth, matching the author's voice while preserving evidence, citations, and length constraints."
