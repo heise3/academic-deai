@@ -1,0 +1,93 @@
+{
+  "tool": {
+    "name": "academic-content-lock",
+    "version": "1.0.0",
+    "semantic_equivalence": false
+  },
+  "sources": {
+    "before": {
+      "path": "cases/03-技术综述/原稿.md",
+      "kind": "markdown"
+    },
+    "after": {
+      "path": "cases/03-技术综述/修订稿.md",
+      "kind": "markdown"
+    }
+  },
+  "status": "review",
+  "summary": {
+    "high_risk_categories": 0,
+    "warning_categories": 2
+  },
+  "categories": {
+    "numbers": {
+      "before_count": 6,
+      "after_count": 6,
+      "removed": [],
+      "added": []
+    },
+    "citations": {
+      "before_count": 6,
+      "after_count": 6,
+      "removed": [],
+      "added": []
+    },
+    "identifiers": {
+      "before_count": 0,
+      "after_count": 0,
+      "removed": [],
+      "added": []
+    },
+    "protected_spans": {
+      "before_count": 0,
+      "after_count": 0,
+      "removed": [],
+      "added": []
+    },
+    "terms": {
+      "before_count": 0,
+      "after_count": 0,
+      "removed": [],
+      "added": []
+    },
+    "stance_negation": {
+      "before_count": 23,
+      "after_count": 17,
+      "removed": [
+        "不",
+        "不",
+        "不",
+        "不",
+        "不",
+        "不",
+        "不",
+        "不能",
+        "不能"
+      ],
+      "added": [
+        "无",
+        "无",
+        "无"
+      ]
+    },
+    "stance_modality": {
+      "before_count": 3,
+      "after_count": 6,
+      "removed": [],
+      "added": [
+        "可能",
+        "可能",
+        "将"
+      ]
+    },
+    "stance_causal": {
+      "before_count": 1,
+      "after_count": 1,
+      "removed": [],
+      "added": []
+    }
+  },
+  "interpretation_rules": [
+    "Differences are review signals, not proof that the revised text is semantically wrong."
+  ]
+}

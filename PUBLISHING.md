@@ -1,6 +1,6 @@
 # GitHub releases
 
-This directory is a standalone source repository for Academic DeAI 3.0.0. The release archive contains the directory and its runtime resources, excluding Git metadata, caches, private data, and local validation environments.
+This directory is a standalone source repository for Academic DeAI. The version is in VERSION. The full release archive contains the directory and its resources, excluding Git metadata, caches, private data, and local validation environments.
 
 ## Publication settings
 
@@ -34,8 +34,10 @@ Clones already have origin. Inspect an existing origin before replacing it. Comm
 
 After the push, check the [GitHub Actions run](https://github.com/heise3/academic-deai/actions). Use the version from VERSION for a release tag and attach an archive verified against that commit. Local tests alone do not establish remote CI success.
 
+For 3.1.0, publish both `academic-deai-3.1.0.zip` (the complete source/skill tree) and `academic-deai-promotion-3.1.0.zip` (the contents of examples/social-demo as a standalone directory), with SHA-256 files. Keep demonstrations in the full archive because README and documentation link to them. Verify both extracted archives, internal links, JSON records and PNG dimensions; the standard CI does not establish media rendering or archive correctness.
+
 ## Release description
 
-Academic DeAI 3.0.0 adds context-aware structural editing, author-sample guidance, academic exceptions for weak style signals, and explicit claim-level fidelity review. It keeps existing text audit tools, makes verification proportional to the edit, and includes portable package checks and source attribution.
+Academic DeAI 3.1.0 presents a model-independent academic editing skill for the latest models across Agent platforms. It adds official installation guidance, four complete synthetic editing demonstrations, claim-review records, and ready-to-use social publication materials. Existing academic editing decisions and text audit tools remain available.
 
 No detector-score or general writing-quality gain is claimed.

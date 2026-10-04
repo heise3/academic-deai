@@ -1,10 +1,18 @@
 # Changelog
 
+## 3.1.0 — 2026-10-04
+
+- Reframed the skill for the latest models across Agent platforms that support Skills or can load its instructions and references.
+- Added official platform installation and invocation guidance, distinguishing documented format support from actual project execution.
+- Published four synthetic editing demonstrations with complete source/revision pairs, 41-claim review, and a recorded semantic correction.
+- Added social publication copy, six PNG cards, editable HTML, and a separate promotional release archive.
+- Kept existing academic editing and audit behavior; no cross-model superiority or detector-score claim is introduced.
+
 ## 3.0.0 — 2026-10-03
 
 - Adapted structural priorities, contextual weak signals, and author-sample guidance from Humanizer 3.1.0 at a recorded commit.
 - Added voice and reader-context guidance with academic exceptions for real contrasts, negative findings, repeated definitions, method structure, and punctuation.
-- Made user scope, direct execution, clean-copy output, and task-appropriate verification explicit for GPT-6 workflows.
+- Made user scope, direct execution, clean-copy output, and task-appropriate verification explicit for Agent workflows.
 - Removed runtime dependence on other installed editing skills and stale fixed confirmations, mandatory ledgers, and universal length thresholds.
 - Retained existing academic audit tools and documented their actual exit codes and semantic blind spots.
 - Added version metadata, source attribution, publishing documentation, CI, and portable package validation.

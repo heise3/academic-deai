@@ -1,0 +1,965 @@
+{
+  "schema_version": "1.0",
+  "purpose": "独立保真核对命题清单；仅从四份原稿提取，未读取修订稿，未评价语言质量，未引入外部知识。",
+  "source_scope": "outputs/academic-deai-social-kit/cases/*/原稿.md",
+  "inclusion_rule": "保留可核对的研究问题、研究对象、操作、条件、数字、结果方向、分析单位、时间、否定、局限、建议、修订动作和引文支持边界；合并原稿重复表达的同一命题。",
+  "exclusion_rule": "不把无实质内容的理论或实践重要性、全面系统深入、多维新视角、价值或贡献评价、礼貌感谢和满意程度评价列为必须保留的研究命题。",
+  "audit_rules": [
+    "逐项核对行为主体、操作对象、被固定条件、观测量和方向，不得以相同词语出现代替语义保真。",
+    "所有数字需连同单位、对象和统计含义保留；不得删除或改写负号、置信区间端点或不确定性。",
+    "问题、建议、可能解释、观察结果和已完成修订具有不同语气强度，不得互相升级。",
+    "不存在、未测量、未调整、不能判断和没有建立因果等否定边界需保留。",
+    "引文标号均为合成原稿中的虚构标号，仅记录原稿的支持范围，不代表文献核验。",
+    "四例的合成演示身份属于必须保留的材料属性，不得让输出被误认为真实研究或真实投稿。"
+  ],
+  "cases": [
+    {
+      "case_id": "01",
+      "name": "中文研究短文：线上阅读提示与即时测验",
+      "source_path": "cases/01-中文研究短文/原稿.md",
+      "synthetic_notice": "研究、数据和引文编号均为虚构，仅用于语言编辑演示，不对应真实研究，也不作为科研证据。",
+      "claims": [
+        {
+          "id": "C01-01",
+          "category": "research_question",
+          "location": "背景",
+          "proposition": "研究考察一次线上阅读任务中，段落前的概括提示是否与更高的即时测验得分相对应。",
+          "object": [
+            "一次线上阅读任务",
+            "段落前概括提示",
+            "即时测验得分"
+          ],
+          "temporal_scope": "一次任务的即时表现",
+          "modality": "研究问题，尚未由本句断言提示提高得分"
+        },
+        {
+          "id": "C01-02",
+          "category": "sample_and_assignment",
+          "location": "方法",
+          "proposition": "纳入96名本科生，随机分为提示组和对照组，每组48人。",
+          "actor": "研究者",
+          "object": "本科生",
+          "operation": "随机分组",
+          "quantities": [
+            {
+              "value": 96,
+              "unit": "人",
+              "meaning": "总样本"
+            },
+            {
+              "value": 48,
+              "unit": "人/组",
+              "meaning": "提示组"
+            },
+            {
+              "value": 48,
+              "unit": "人/组",
+              "meaning": "对照组"
+            }
+          ]
+        },
+        {
+          "id": "C01-03",
+          "category": "task_and_intervention",
+          "location": "方法",
+          "proposition": "两组均在20分钟内阅读同一篇说明性材料；提示组在每个段落前看到一句概括提示，对照组看到不含提示的材料。",
+          "object": [
+            "说明性材料",
+            "段落前提示"
+          ],
+          "operation": "仅提示组获得每段前的一句概括提示",
+          "fixed_conditions": [
+            "相同说明性材料",
+            "20分钟阅读时限"
+          ],
+          "quantities": [
+            {
+              "value": 20,
+              "unit": "分钟",
+              "meaning": "阅读时限"
+            },
+            {
+              "value": 1,
+              "unit": "句/段",
+              "meaning": "提示组每段前概括提示"
+            }
+          ],
+          "negation": "对照组材料不含提示"
+        },
+        {
+          "id": "C01-04",
+          "category": "outcome_measurement",
+          "location": "方法",
+          "proposition": "阅读结束后，两组完成相同的12道选择题，每题1分；两组材料、阅读时限和题目一致，区别仅在于是否提供段落提示。",
+          "object": "即时选择题测验",
+          "temporal_scope": "阅读结束后",
+          "quantities": [
+            {
+              "value": 12,
+              "unit": "道",
+              "meaning": "选择题题数"
+            },
+            {
+              "value": 1,
+              "unit": "分/题",
+              "meaning": "每题分值"
+            }
+          ],
+          "fixed_conditions": [
+            "材料",
+            "阅读时限",
+            "测验题目"
+          ],
+          "exclusive_difference": "是否提供段落提示"
+        },
+        {
+          "id": "C01-05",
+          "category": "unmeasured_variables",
+          "location": "方法",
+          "proposition": "研究未测量阅读前知识水平，也未设置延迟测验。",
+          "negations": [
+            "阅读前知识水平未测量",
+            "无延迟测验"
+          ],
+          "temporal_scope": [
+            "阅读前",
+            "延迟测验时间"
+          ]
+        },
+        {
+          "id": "C01-06",
+          "category": "numerical_result",
+          "location": "结果",
+          "proposition": "提示组平均得分8.1分，对照组7.3分，两组均值差为0.8分，95%置信区间为-0.1至1.7分。",
+          "object": "两组即时测验平均得分及差异",
+          "quantities": [
+            {
+              "value": 8.1,
+              "unit": "分",
+              "meaning": "提示组平均得分"
+            },
+            {
+              "value": 7.3,
+              "unit": "分",
+              "meaning": "对照组平均得分"
+            },
+            {
+              "value": 0.8,
+              "unit": "分",
+              "meaning": "提示组减对照组的均值差"
+            },
+            {
+              "value": 95,
+              "unit": "%",
+              "meaning": "置信水平"
+            },
+            {
+              "value": -0.1,
+              "unit": "分",
+              "meaning": "置信区间下界"
+            },
+            {
+              "value": 1.7,
+              "unit": "分",
+              "meaning": "置信区间上界"
+            }
+          ],
+          "direction": "提示组样本均值高于对照组",
+          "citations": [
+            "[1]"
+          ]
+        },
+        {
+          "id": "C01-07",
+          "category": "uncertainty_interpretation",
+          "location": "结果、讨论、结论",
+          "proposition": "置信区间包含0，数据仍与没有组间差异的情况相容；提示组本次任务平均得分较高，但差异估计仍有较大不确定性。",
+          "object": "均值差估计",
+          "negation": "不能把均值较高改写为已确定的提示效果",
+          "modality": "与无组间差异相容，不等同于证实无差异",
+          "uncertainty": "置信区间跨越0，差异估计不确定"
+        },
+        {
+          "id": "C01-08",
+          "category": "design_interpretation",
+          "location": "讨论",
+          "proposition": "材料、时限和题目一致，使两组比较集中在是否提供段落提示这一差别上。",
+          "fixed_conditions": [
+            "材料",
+            "时限",
+            "题目"
+          ],
+          "object": "提供段落提示与否的比较",
+          "boundary": "此句解释任务内的比较范围"
+        },
+        {
+          "id": "C01-09",
+          "category": "assignment_limit",
+          "location": "讨论",
+          "proposition": "随机分组减少了分组方式导致的系统性差异，但未测量的阅读前知识水平仍可能在本次样本中不均衡。",
+          "operation": "随机分组",
+          "direction": "减少分组方式带来的系统性差异",
+          "limitation": "本次样本中阅读前知识水平可能不均衡",
+          "modality": "可能不均衡；原稿未断言实际已发生不均衡"
+        },
+        {
+          "id": "C01-10",
+          "category": "time_and_generalization_limit",
+          "location": "讨论、结论",
+          "proposition": "没有延迟测验，因此即时得分不能判断长期保持；研究范围是一次具体阅读任务中的即时表现，不能扩展为所有学习场景的结论。",
+          "temporal_scope": "即时表现",
+          "negations": [
+            "不能判断长期保持",
+            "不支持关于所有学习场景的结论"
+          ],
+          "limitation": "长期保持没有得到测量"
+        },
+        {
+          "id": "C01-11",
+          "category": "interpretation_rule",
+          "location": "讨论",
+          "proposition": "评价提示效果需同时考虑0.8分的差异估计和跨越0的置信区间，不能仅凭两组均值高低判断。",
+          "object": "提示效果评价",
+          "quantities": [
+            {
+              "value": 0.8,
+              "unit": "分",
+              "meaning": "差异估计"
+            }
+          ],
+          "condition": "同时纳入差异估计与区间不确定性",
+          "negation": "仅凭均值高低不足以判断",
+          "citations": [
+            "[1]"
+          ]
+        },
+        {
+          "id": "C01-12",
+          "category": "future_work",
+          "location": "结论",
+          "proposition": "未来研究可增加阅读前知识水平测量和延迟测验，以区分既有知识、即时表现与长期保持。",
+          "operation": [
+            "增加阅读前知识水平测量",
+            "增加延迟测验"
+          ],
+          "object": [
+            "既有知识",
+            "即时表现",
+            "长期保持"
+          ],
+          "modality": "未来可采取的建议，未声称本研究已实施"
+        }
+      ],
+      "citation_scope": [
+        {
+          "marker": "[1]",
+          "occurrences": [
+            {
+              "location": "结果",
+              "claim_ids": [
+                "C01-06"
+              ],
+              "direct_scope": "两组平均得分、0.8分均值差及95%置信区间"
+            },
+            {
+              "location": "讨论",
+              "claim_ids": [
+                "C01-11"
+              ],
+              "direct_scope": "应结合差异估计和跨越0的置信区间评价，不能仅依据均值高低"
+            }
+          ],
+          "related_interpretation": [
+            "C01-07"
+          ],
+          "must_not_extend_to": [
+            "长期保持改善",
+            "所有学习场景有效",
+            "已经确定存在组间差异",
+            "原稿未说明由该标号支持的样本纳入和分组细节"
+          ]
+        }
+      ],
+      "excluded_rhetoric": [
+        "数字化学习的重要议题",
+        "理论意义和实践价值",
+        "重要切入点",
+        "提供新视角",
+        "全面系统深入分析的重要性",
+        "领域持续发展的基础"
+      ],
+      "high_risk_changes": [
+        "丢失置信区间负号",
+        "把与零差异相容写成显著提高或证实无效",
+        "把即时表现写成长效",
+        "把可能基线不均衡写成实际不均衡",
+        "把随机分组写成完全排除组间差异"
+      ]
+    },
+    {
+      "case_id": "02",
+      "name": "English abstract and discussion: sensor readings and task scores",
+      "source_path": "cases/02-English-abstract/原稿.md",
+      "synthetic_notice": "The study, data and citation identifiers are invented for a language-editing demonstration; they are not real research findings or scientific evidence.",
+      "claims": [
+        {
+          "id": "C02-01",
+          "category": "sample_and_time",
+          "location": "Abstract",
+          "proposition": "The study examined 72 classrooms during a single teaching session.",
+          "object": "classrooms",
+          "quantities": [
+            {
+              "value": 72,
+              "unit": "classrooms",
+              "meaning": "sample size"
+            },
+            {
+              "value": 1,
+              "unit": "teaching session",
+              "meaning": "observation period"
+            }
+          ],
+          "temporal_scope": "single teaching session"
+        },
+        {
+          "id": "C02-02",
+          "category": "measurement",
+          "location": "Abstract",
+          "proposition": "A carbon dioxide sensor reading and a classroom mean score on a 10-item task were collected in each classroom at the end of the session.",
+          "objects": [
+            "carbon dioxide sensor reading",
+            "classroom mean task score"
+          ],
+          "quantities": [
+            {
+              "value": 10,
+              "unit": "items",
+              "meaning": "task length"
+            }
+          ],
+          "temporal_scope": "end of the teaching session",
+          "aggregation_level": "classroom mean score",
+          "boundary": "原稿只说明传感器读数，未给出单位、通风率或个体暴露测量"
+        },
+        {
+          "id": "C02-03",
+          "category": "association_result",
+          "location": "Abstract",
+          "proposition": "Higher sensor readings were associated with lower classroom mean task scores (r=-0.28, P=0.02).",
+          "object": "relation between classroom sensor readings and classroom mean task scores",
+          "direction": "negative association",
+          "quantities": [
+            {
+              "value": -0.28,
+              "unit": "r",
+              "meaning": "reported correlation coefficient"
+            },
+            {
+              "value": 0.02,
+              "unit": "P",
+              "meaning": "reported P value"
+            }
+          ],
+          "modality": "association",
+          "citations": [
+            "[1]"
+          ]
+        },
+        {
+          "id": "C02-04",
+          "category": "analysis_and_measurement_limits",
+          "location": "Abstract、Discussion",
+          "proposition": "The analysis did not adjust for class size; ventilation rate was not measured; repeated measurements were not collected.",
+          "negations": [
+            "no adjustment for class size",
+            "ventilation rate not measured",
+            "no repeated measurements"
+          ],
+          "object": [
+            "class size",
+            "ventilation rate",
+            "repeated observations"
+          ]
+        },
+        {
+          "id": "C02-05",
+          "category": "causal_limit",
+          "location": "Abstract",
+          "proposition": "The cross-sectional design does not establish that carbon dioxide caused the score differences.",
+          "design": "cross-sectional",
+          "negation": "does not establish causation",
+          "object": "causal effect of carbon dioxide on score differences",
+          "boundary": "Observed association must not be promoted to a causal effect."
+        },
+        {
+          "id": "C02-06",
+          "category": "analysis_unit",
+          "location": "Discussion",
+          "proposition": "The classroom, rather than the individual student, was the unit of analysis.",
+          "analysis_unit": "classroom",
+          "negation": "not individual student"
+        },
+        {
+          "id": "C02-07",
+          "category": "coefficient_scope",
+          "location": "Discussion",
+          "proposition": "The coefficient describes a relation between classroom-level measurements and classroom mean scores; it does not describe a relation among individual students.",
+          "object": [
+            "classroom-level measurements",
+            "classroom mean scores"
+          ],
+          "negation": "does not describe an individual-student relation",
+          "citations": [
+            "[1]"
+          ]
+        },
+        {
+          "id": "C02-08",
+          "category": "unresolved_alternative_explanation",
+          "location": "Discussion",
+          "proposition": "The lack of class-size adjustment and ventilation-rate measurements leaves alternative explanations unresolved.",
+          "conditions": [
+            "class size not adjusted for",
+            "ventilation rate not measured"
+          ],
+          "limitation": "alternative explanations remain unresolved",
+          "modality": "unresolved; no particular alternative is established"
+        },
+        {
+          "id": "C02-09",
+          "category": "possible_common_factor",
+          "location": "Discussion",
+          "proposition": "Class size could be related to both the sensor reading and the mean task score.",
+          "object": "class size",
+          "possible_relations": [
+            "sensor reading",
+            "classroom mean task score"
+          ],
+          "modality": "could;原稿未报告关联数值或断言实际关系"
+        },
+        {
+          "id": "C02-10",
+          "category": "temporal_limit",
+          "location": "Discussion",
+          "proposition": "Each classroom was measured only once, so the data do not show whether changes in the reading preceded changes in performance.",
+          "quantities": [
+            {
+              "value": 1,
+              "unit": "measurement per classroom",
+              "meaning": "measurement frequency"
+            }
+          ],
+          "negation": "cannot determine whether sensor-reading changes preceded performance changes",
+          "temporal_scope": "no established temporal ordering"
+        },
+        {
+          "id": "C02-11",
+          "category": "future_work",
+          "location": "Discussion",
+          "proposition": "Future work could collect repeated measurements, record class size and ventilation rate, and test whether within-classroom changes show the same association.",
+          "operations": [
+            "collect repeated measurements",
+            "record class size",
+            "record ventilation rate",
+            "test the association of within-classroom changes"
+          ],
+          "analysis_scope": "within-classroom changes",
+          "modality": "future suggestions; not completed actions or confirmed replication"
+        }
+      ],
+      "citation_scope": [
+        {
+          "marker": "[1]",
+          "occurrences": [
+            {
+              "location": "Abstract",
+              "claim_ids": [
+                "C02-03"
+              ],
+              "direct_scope": "reported inverse association, r=-0.28 and P=0.02"
+            },
+            {
+              "location": "Discussion",
+              "claim_ids": [
+                "C02-07"
+              ],
+              "direct_scope": "the coefficient is a classroom-level relation and is not an individual-student relation"
+            }
+          ],
+          "must_not_extend_to": [
+            "causal effects of carbon dioxide",
+            "individual-student association",
+            "within-classroom change association",
+            "unreported class-size or ventilation effects"
+          ]
+        }
+      ],
+      "excluded_rhetoric": [
+        "rapidly evolving landscape",
+        "paramount importance",
+        "multifaceted relationship",
+        "broader picture",
+        "valuable insights",
+        "foundational consideration",
+        "study value",
+        "comprehensive nuanced holistic understanding"
+      ],
+      "high_risk_changes": [
+        "把教室作为单位改成学生",
+        "把sensor reading改成未说明的通风率或个人暴露",
+        "丢失r的负号",
+        "把P值写成效应大小",
+        "把横断面关联写成因果或时间先后",
+        "把within-classroom的未来检验写成已有结果"
+      ]
+    },
+    {
+      "case_id": "03",
+      "name": "技术综述：检测性能下降的不同来源",
+      "source_path": "cases/03-技术综述/原稿.md",
+      "synthetic_notice": "实验、设备数量和引文编号均为虚构，仅用于语言编辑演示，不对应真实研究，也不作为技术验证证据。",
+      "claims": [
+        {
+          "id": "C03-01",
+          "category": "system_and_alternative_sources",
+          "location": "问题与解释",
+          "proposition": "对依赖传感器幅度识别输入的系统，检测性能下降至少可来自输入强度减小、传感器增益降低和环境噪声增大三种不同变化。",
+          "system": "依赖传感器幅度识别输入的系统",
+          "changes": [
+            "输入强度减小",
+            "传感器增益降低",
+            "环境噪声增大"
+          ],
+          "modality": "至少可以来自；三种来源不是穷尽清单",
+          "direction": [
+            "输入强度向下",
+            "增益向下",
+            "噪声向上"
+          ]
+        },
+        {
+          "id": "C03-02",
+          "category": "observation_distinction",
+          "location": "问题与解释",
+          "proposition": "幅度变小与检测准确率下降是不同观测量，需要分别记录，否则不同原因可能被归入同一种表现。",
+          "objects": [
+            "信号幅度",
+            "检测准确率"
+          ],
+          "operation": "分别记录",
+          "negation": "两个观测量不可混同",
+          "modality": "混同可能导致原因归类错误"
+        },
+        {
+          "id": "C03-03",
+          "category": "experiment_1_conditions",
+          "location": "实验之间的比较：第一组",
+          "proposition": "第一组实验使用12台传感器，输入强度和环境噪声保持不变。",
+          "quantities": [
+            {
+              "value": 12,
+              "unit": "台传感器",
+              "meaning": "第一组设备数"
+            }
+          ],
+          "fixed_conditions": [
+            "输入强度",
+            "环境噪声"
+          ]
+        },
+        {
+          "id": "C03-04",
+          "category": "experiment_1_operation_and_result",
+          "location": "实验之间的比较：第一组",
+          "proposition": "研究者降低传感器增益后，记录到的幅度减小；恢复原增益后，幅度恢复。",
+          "actor": "研究者",
+          "object": "传感器增益",
+          "operations": [
+            "降低增益",
+            "恢复原增益"
+          ],
+          "outcomes": [
+            "降低增益后幅度减小",
+            "恢复原增益后幅度恢复"
+          ],
+          "fixed_conditions": [
+            "输入强度不变",
+            "环境噪声不变"
+          ],
+          "temporal_order": "降低增益 → 幅度减小；恢复原增益 → 幅度恢复",
+          "citations": [
+            "[1]"
+          ]
+        },
+        {
+          "id": "C03-05",
+          "category": "experiment_1_interpretation",
+          "location": "实验之间的比较：第一组、综合判断",
+          "proposition": "在第一组输入和噪声固定的条件下，幅度下降对应增益降低，而不是输入强度减小；该实验支持增益变化能够改变幅度。",
+          "fixed_conditions": [
+            "输入强度",
+            "环境噪声"
+          ],
+          "object": "增益与幅度",
+          "negation": "该组幅度下降不对应输入强度减小",
+          "scope": "第一组实验的受控条件",
+          "citations": [
+            "[1]"
+          ]
+        },
+        {
+          "id": "C03-06",
+          "category": "experiment_2_conditions",
+          "location": "实验之间的比较：第二组",
+          "proposition": "第二组实验使用15台传感器，增益和环境噪声保持不变。",
+          "quantities": [
+            {
+              "value": 15,
+              "unit": "台传感器",
+              "meaning": "第二组设备数"
+            }
+          ],
+          "fixed_conditions": [
+            "传感器增益",
+            "环境噪声"
+          ]
+        },
+        {
+          "id": "C03-07",
+          "category": "experiment_2_operation_and_result",
+          "location": "实验之间的比较：第二组",
+          "proposition": "研究者减小输入强度后，幅度下降；重新校准但保持原增益并未恢复幅度。",
+          "actor": "研究者",
+          "object": "输入强度",
+          "operations": [
+            "减小输入强度",
+            "重新校准且保持原增益"
+          ],
+          "outcomes": [
+            "输入强度减小后幅度下降",
+            "重新校准未恢复幅度"
+          ],
+          "fixed_conditions": [
+            "原增益保持",
+            "环境噪声不变"
+          ],
+          "negation": "重新校准未恢复幅度",
+          "citations": [
+            "[2]"
+          ]
+        },
+        {
+          "id": "C03-08",
+          "category": "experiment_2_interpretation",
+          "location": "实验之间的比较：第二组、综合判断",
+          "proposition": "第二组改变的是输入强度；它与第一组虽都出现幅度下降，但操作对象不同；在增益和噪声固定时，输入强度变化能够改变幅度。",
+          "comparison": "第一组改变增益，第二组改变输入强度",
+          "shared_observation": "幅度下降",
+          "fixed_conditions": [
+            "增益",
+            "环境噪声"
+          ],
+          "citations": [
+            "[2]"
+          ]
+        },
+        {
+          "id": "C03-09",
+          "category": "experiment_3_conditions",
+          "location": "实验之间的比较：第三组",
+          "proposition": "第三组实验使用18台传感器，输入强度和增益保持不变。",
+          "quantities": [
+            {
+              "value": 18,
+              "unit": "台传感器",
+              "meaning": "第三组设备数"
+            }
+          ],
+          "fixed_conditions": [
+            "输入强度",
+            "传感器增益"
+          ]
+        },
+        {
+          "id": "C03-10",
+          "category": "experiment_3_operation_and_result",
+          "location": "实验之间的比较：第三组",
+          "proposition": "研究者增加环境噪声后，信号幅度未下降，但检测准确率降低。",
+          "actor": "研究者",
+          "object": "环境噪声",
+          "operation": "增加环境噪声",
+          "outcomes": [
+            "信号幅度未下降",
+            "检测准确率降低"
+          ],
+          "fixed_conditions": [
+            "输入强度不变",
+            "增益不变"
+          ],
+          "directions": [
+            "环境噪声增加",
+            "准确率降低"
+          ],
+          "negation": "信号幅度未下降；不能强化为幅度数值完全不变",
+          "citations": [
+            "[3]"
+          ]
+        },
+        {
+          "id": "C03-11",
+          "category": "experiment_3_interpretation",
+          "location": "实验之间的比较：第三组、综合判断",
+          "proposition": "在第三组输入和增益固定的条件下，噪声变化可降低准确率而不降低信号幅度；性能下降来自识别受到噪声干扰，不能由幅度下降这一观测量单独捕捉。",
+          "fixed_conditions": [
+            "输入强度",
+            "增益"
+          ],
+          "object": [
+            "噪声",
+            "准确率",
+            "信号幅度"
+          ],
+          "negation": "仅看幅度下降不足以捕捉该种性能下降",
+          "scope": "第三组实验的受控条件",
+          "citations": [
+            "[3]"
+          ]
+        },
+        {
+          "id": "C03-12",
+          "category": "cross_experiment_distinction",
+          "location": "综合判断",
+          "proposition": "三组实验区分不同操作对象及不同观测量，不能看作对同一个结果的简单重复。",
+          "operations": [
+            "增益变化",
+            "输入强度变化",
+            "噪声变化"
+          ],
+          "observations": [
+            "幅度",
+            "检测准确率"
+          ],
+          "negation": "不能将三组混成同一操作或同一结果"
+        },
+        {
+          "id": "C03-13",
+          "category": "controlled_conditions_and_field_limit",
+          "location": "综合判断",
+          "proposition": "三组实验的环境噪声条件由研究者分别控制；现场监测可能有多种因素同时变化，因此不能把这些操作结果直接当作现场性能下降的唯一解释。",
+          "actor": "研究者",
+          "operation": "分别控制实验的环境噪声条件",
+          "field_condition": "多种因素同时变化",
+          "negation": "受控操作结果不能直接成为现场下降的唯一解释",
+          "boundary": "第三组噪声由研究者主动增加，也仍属受控条件；不能写成三组噪声均固定不变"
+        },
+        {
+          "id": "C03-14",
+          "category": "field_measurement_requirement",
+          "location": "综合判断",
+          "proposition": "判断现场问题仍需分别记录输入、增益、噪声、幅度与准确率。",
+          "operation": "分别记录",
+          "objects": [
+            "输入",
+            "增益",
+            "噪声",
+            "幅度",
+            "准确率"
+          ],
+          "scope": "现场问题判断"
+        }
+      ],
+      "citation_scope": [
+        {
+          "marker": "[1]",
+          "occurrences": [
+            {
+              "location": "第一组实验",
+              "claim_ids": [
+                "C03-04"
+              ],
+              "direct_scope": "降低增益后幅度减小，恢复原增益后幅度恢复"
+            },
+            {
+              "location": "综合判断",
+              "claim_ids": [
+                "C03-05"
+              ],
+              "direct_scope": "输入和噪声固定时，增益变化能够改变幅度"
+            }
+          ],
+          "required_context": [
+            "C03-03"
+          ],
+          "must_not_extend_to": [
+            "输入强度变化的实验",
+            "噪声增加导致准确率下降",
+            "现场下降的唯一原因"
+          ]
+        },
+        {
+          "marker": "[2]",
+          "occurrences": [
+            {
+              "location": "第二组实验",
+              "claim_ids": [
+                "C03-07"
+              ],
+              "direct_scope": "输入强度减小后幅度下降，重新校准且保持原增益未恢复幅度"
+            },
+            {
+              "location": "综合判断",
+              "claim_ids": [
+                "C03-08"
+              ],
+              "direct_scope": "增益和噪声固定时，输入强度变化能够改变幅度"
+            }
+          ],
+          "required_context": [
+            "C03-06"
+          ],
+          "must_not_extend_to": [
+            "第一组恢复增益后的幅度恢复",
+            "噪声增加导致准确率下降",
+            "重新校准必然无效的一般结论"
+          ]
+        },
+        {
+          "marker": "[3]",
+          "occurrences": [
+            {
+              "location": "第三组实验",
+              "claim_ids": [
+                "C03-10"
+              ],
+              "direct_scope": "环境噪声增加后，信号幅度未下降而准确率降低"
+            },
+            {
+              "location": "综合判断",
+              "claim_ids": [
+                "C03-11"
+              ],
+              "direct_scope": "输入和增益固定时，噪声可降低准确率而不降低信号幅度"
+            }
+          ],
+          "required_context": [
+            "C03-09"
+          ],
+          "must_not_extend_to": [
+            "信号幅度下降",
+            "幅度绝对恒定",
+            "现场下降的唯一原因"
+          ]
+        }
+      ],
+      "excluded_rhetoric": [
+        "重要意义",
+        "全面系统多维理解框架",
+        "坚实基础",
+        "重要观察和宝贵启示",
+        "问题复杂性",
+        "新的视角",
+        "多角度分析的重要性"
+      ],
+      "high_risk_changes": [
+        "混同输入与增益",
+        "把重新校准写成恢复输入",
+        "把未下降强化为完全不变",
+        "把第三组结果写成幅度下降",
+        "把三组环境噪声均写成不变",
+        "把受控实验机制写成现场唯一原因",
+        "将[1][2][3]移到错误实验"
+      ]
+    },
+    {
+      "case_id": "04",
+      "name": "Reviewer response: measurement timing",
+      "source_path": "cases/04-审稿回复/原稿.md",
+      "synthetic_notice": "The reviewer question and manuscript changes are invented for a language-editing demonstration and do not refer to a real submission.",
+      "claims": [
+        {
+          "id": "C04-01",
+          "category": "reviewer_request",
+          "location": "Reviewer question",
+          "proposition": "The reviewer asks whether the sensor reading and task score were collected at the same time and requests clarification of the timing and its implications for interpretation.",
+          "actor": "reviewer",
+          "objects": [
+            "sensor reading",
+            "task score",
+            "measurement timing",
+            "interpretive implications"
+          ],
+          "modality": "question and requested clarification"
+        },
+        {
+          "id": "C04-02",
+          "category": "study_context",
+          "location": "Response",
+          "proposition": "The study examined the relationship between classroom measurements and task performance in 72 classrooms; this context is described in the Introduction.",
+          "object": "relationship between classroom measurements and task performance",
+          "quantities": [
+            {
+              "value": 72,
+              "unit": "classrooms",
+              "meaning": "study sample"
+            }
+          ],
+          "manuscript_location": "Introduction",
+          "boundary": "背景关系的说明，不代表Introduction中已说明测量时间"
+        },
+        {
+          "id": "C04-03",
+          "category": "completed_methods_revision",
+          "location": "Response",
+          "proposition": "The authors have now specified in Methods, paragraph 2, that the sensor reading and task score were collected at the end of the same teaching session.",
+          "actor": "authors",
+          "operation": "have now specified",
+          "manuscript_location": {
+            "section": "Methods",
+            "paragraph": 2
+          },
+          "objects": [
+            "sensor reading",
+            "task score"
+          ],
+          "temporal_scope": "end of the same teaching session",
+          "completion_status": "completed manuscript change claimed in the synthetic response"
+        },
+        {
+          "id": "C04-04",
+          "category": "completed_discussion_revision",
+          "location": "Response",
+          "proposition": "The authors have also added to Discussion, paragraph 3, that simultaneous measurements cannot determine whether a change in the reading preceded a change in task performance.",
+          "actor": "authors",
+          "operation": "have also added",
+          "manuscript_location": {
+            "section": "Discussion",
+            "paragraph": 3
+          },
+          "temporal_scope": "simultaneous measurements",
+          "negation": "cannot determine whether reading changes preceded task-performance changes",
+          "completion_status": "completed manuscript change claimed in the synthetic response",
+          "boundary": "cannot determine temporal order; must not be rewritten as proof that no reading change preceded performance change"
+        }
+      ],
+      "citation_scope": [],
+      "citation_note": "该案例无编号引文；Introduction、Methods paragraph 2 和 Discussion paragraph 3 是稿内位置，不是外部文献引文。",
+      "excluded_rhetoric": [
+        "sincere thanks",
+        "insightful constructive comment",
+        "invaluable opportunity",
+        "importance of careful comprehensive consideration",
+        "strengthened transparency and interpretability",
+        "hope the response is satisfactory"
+      ],
+      "high_risk_changes": [
+        "省略同一节课结束时的时间",
+        "把同一节课改成不同课次",
+        "交换Methods第2段与Discussion第3段",
+        "把已修改写成拟修改",
+        "把不能确定先后写成确定无先后",
+        "只保留背景而遗漏直接答复"
+      ]
+    }
+  ]
+}

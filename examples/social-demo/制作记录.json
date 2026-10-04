@@ -1,0 +1,310 @@
+{
+  "created_on": "2026-10-04",
+  "timezone": "Asia/Shanghai",
+  "purpose": "Synthetic social demonstration; no detector test or comparative writing benchmark.",
+  "skill": {
+    "name": "academic-deai",
+    "version": "3.0.0",
+    "entry_sha256": "43f2258099447cbc0bc04f745e655887758a713c7ebc6ea09c1d143aec6e6983",
+    "execution": "Two separate language-model editor turns read the installed skill. Optional scripts compare observable content; they do not rewrite text."
+  },
+  "generation": "Four original texts deliberately include formulaic framing. All studies, data, experiments, citations and manuscript changes are fictional.",
+  "review": {
+    "claim_count": 41,
+    "method": "A separate model turn extracted source claims before inspecting revisions; not independent human blind review.",
+    "found_and_corrected": "Case03 changed non-decreasing amplitude to constant amplitude in one sentence. The editor restored non-decreasing wording and the reviewer rechecked it.",
+    "final_status": "No unresolved material mismatch found within the 41-claim checklist and citation scope. This does not establish general semantic equivalence."
+  },
+  "cases": [
+    {
+      "case_id": "01-中文研究短文",
+      "original": {
+        "path": "cases/01-中文研究短文/原稿.md",
+        "sha256": "fce7daedc552f8cffa20c7321fe3951e5d8d66d8d83a00973a36156ef5e6bcea"
+      },
+      "revision": {
+        "path": "cases/01-中文研究短文/修订稿.md",
+        "sha256": "69624e0451507704439917587191f271c79568a7d13462aa63206e3dd92f6acb"
+      },
+      "notes": "cases/01-中文研究短文/编辑说明.md",
+      "observable_content_check": {
+        "strict_exit_code": 0,
+        "status": "review",
+        "summary": {
+          "high_risk_categories": 0,
+          "warning_categories": 3
+        },
+        "semantic_equivalence_proven": false
+      }
+    },
+    {
+      "case_id": "02-English-abstract",
+      "original": {
+        "path": "cases/02-English-abstract/原稿.md",
+        "sha256": "71cc6a7bbbfdfe8aab4e374d8c083f590f60f82f1077598a4e43c93186e61d0b"
+      },
+      "revision": {
+        "path": "cases/02-English-abstract/修订稿.md",
+        "sha256": "7d29d67d4e072e3fae60f3b9bca31968f36a9528b450f26681f8cec3f2f96f5e"
+      },
+      "notes": "cases/02-English-abstract/编辑说明.md",
+      "observable_content_check": {
+        "strict_exit_code": 0,
+        "status": "review",
+        "summary": {
+          "high_risk_categories": 0,
+          "warning_categories": 3
+        },
+        "semantic_equivalence_proven": false
+      }
+    },
+    {
+      "case_id": "03-技术综述",
+      "original": {
+        "path": "cases/03-技术综述/原稿.md",
+        "sha256": "cfe03ed36f25c39003a6ee728a0f3df341e6b00b2053b09ee3d9076cc277bbe7"
+      },
+      "revision": {
+        "path": "cases/03-技术综述/修订稿.md",
+        "sha256": "228f081ad59277e266a62e45bd166d5a24c20530b2a4b3771a91c99a46ba37e4"
+      },
+      "notes": "cases/03-技术综述/编辑说明.md",
+      "observable_content_check": {
+        "strict_exit_code": 0,
+        "status": "review",
+        "summary": {
+          "high_risk_categories": 0,
+          "warning_categories": 2
+        },
+        "semantic_equivalence_proven": false
+      }
+    },
+    {
+      "case_id": "04-审稿回复",
+      "original": {
+        "path": "cases/04-审稿回复/原稿.md",
+        "sha256": "67f3d5038267bf0743b66cdecdf2321dbd3f86def7351a97b9f03e35a9f66686"
+      },
+      "revision": {
+        "path": "cases/04-审稿回复/修订稿.md",
+        "sha256": "143a9e193ed132f88cea62a222916976bf9d8f2e47ff2087174acec4ee1ff9ad"
+      },
+      "notes": "cases/04-审稿回复/编辑说明.md",
+      "observable_content_check": {
+        "strict_exit_code": 0,
+        "status": "review",
+        "summary": {
+          "high_risk_categories": 0,
+          "warning_categories": 2
+        },
+        "semantic_equivalence_proven": false
+      }
+    }
+  ],
+  "exports": {
+    "配图/01.png": [
+      1080,
+      1440
+    ],
+    "配图/02.png": [
+      1080,
+      1440
+    ],
+    "配图/03.png": [
+      1080,
+      1440
+    ],
+    "配图/04.png": [
+      1080,
+      1440
+    ],
+    "配图/05.png": [
+      1080,
+      1440
+    ],
+    "配图/06.png": [
+      1080,
+      1440
+    ],
+    "配图/总览.png": [
+      1080,
+      960
+    ]
+  },
+  "layout_review": {
+    "cards_checked": 6,
+    "overflow_issues": 0,
+    "visual_review": "Contact sheet and individual text-heavy cards inspected."
+  },
+  "local_links": {
+    "broken": []
+  },
+  "files": {
+    "README.md": "6af44d07be9fba7f1952ab0c5a7e4249d5969ceea0e5677311a5d36bfbbc9682",
+    "cases/01-中文研究短文/修订稿.md": "69624e0451507704439917587191f271c79568a7d13462aa63206e3dd92f6acb",
+    "cases/01-中文研究短文/原稿.md": "fce7daedc552f8cffa20c7321fe3951e5d8d66d8d83a00973a36156ef5e6bcea",
+    "cases/01-中文研究短文/编辑说明.md": "b9282e5c6be7ad3498a83255274e9a8089fe1dd48c9137c52fb78965e613644f",
+    "cases/02-English-abstract/修订稿.md": "7d29d67d4e072e3fae60f3b9bca31968f36a9528b450f26681f8cec3f2f96f5e",
+    "cases/02-English-abstract/原稿.md": "71cc6a7bbbfdfe8aab4e374d8c083f590f60f82f1077598a4e43c93186e61d0b",
+    "cases/02-English-abstract/编辑说明.md": "1ad9c0ea3951b37d6a15afecf78109d1cc69d2bcee90377e8f672fa41bb5884d",
+    "cases/03-技术综述/修订稿.md": "228f081ad59277e266a62e45bd166d5a24c20530b2a4b3771a91c99a46ba37e4",
+    "cases/03-技术综述/原稿.md": "cfe03ed36f25c39003a6ee728a0f3df341e6b00b2053b09ee3d9076cc277bbe7",
+    "cases/03-技术综述/编辑说明.md": "d28ea96917ab84971546594361d98d4641c7b2f821e58ad598d5f35160a3de5e",
+    "cases/04-审稿回复/修订稿.md": "143a9e193ed132f88cea62a222916976bf9d8f2e47ff2087174acec4ee1ff9ad",
+    "cases/04-审稿回复/原稿.md": "67f3d5038267bf0743b66cdecdf2321dbd3f86def7351a97b9f03e35a9f66686",
+    "cases/04-审稿回复/编辑说明.md": "cdffa3db1e50bcbc0a056ef874dcf9e5ff32978a8fc8a6768c9be9a893914c88",
+    "发布文案.md": "a1aa4cdf4659cfda941c878121ad46621030d8f69b278355ef3b2a6d1858390b",
+    "命题清单.json": "f14cf0fe74d6843c66254667fc792fcf2d3fe5dc6367a46e6288f9a5e79fdfd1",
+    "图文预览.html": "a455806623f0bfd44ff6a371f2e019a48e9fab340cffbaa157c692e462ace10d",
+    "核对记录.md": "0c3fd5f0720b26b7a7a9be5df69f932ca673d1ac4f3b76a57ff7ba04b809d5cb",
+    "核查资料/01-中文研究短文-content-lock.json": "f7d8838975e6542e740cbd825d57dfd72e0defcc7957f4795d30d8a02d0ebd38",
+    "核查资料/02-English-abstract-content-lock.json": "ecbb67a2fff483aa4496fc925d7451ab5a4d0205dea6a60a489f7b86a2b59c0e",
+    "核查资料/03-技术综述-content-lock.json": "b396ad0462632f88ea3405bafa7e5e4ff51d1ed2f45d35a47dd6b3d15829c2c7",
+    "核查资料/03-技术综述-first-content-lock.json": "28939846af48c0c50edff065d3aafa5e0063203ccc517b47b598d74cfacf8f63",
+    "核查资料/04-审稿回复-content-lock.json": "5c073ef9cf78ddec471d82f59cae8a161653dfbcfe85e1f6f74a475efc58d1b2",
+    "案例合集.md": "7e958f92aa2d4f20d86ab831b30c0efb7da74542a92d40a2f24fdf342d1ae52f",
+    "案例对照.html": "401542360ebd791aafe4aff8ef7ad33e19684c83df1940eb40727d2c945dfc19",
+    "配图/01.png": "04f2be81a8971ca78f7dcb6d8eab2a52d8b797e8c327e3410c6d4374292e625b",
+    "配图/02.png": "760a06b914a92c8514e7a19f89b956c6256ae68b345a05f80c3e2da6e27d20bf",
+    "配图/03.png": "796b8f76bae7a1e961876ceef210b7970646f582804f1094a47d96fce05e3320",
+    "配图/04.png": "2eab6eedff4f00cabd07c8c9c9269617e9bb5c904d3f1532d0dcd4221c34e101",
+    "配图/05.png": "f49fc37a063ce323fc60732690fab919592bdeb9ace406e9192bc3ac6bc57515",
+    "配图/06.png": "5f1ba730337224441860eedfda795c36fa01a124d415e5017ebb3fea8a1a5ff0",
+    "配图/总览.png": "43fb9a050e3b106b9ee00cc74e9a789285c74eb492a7d2c074f524fd38bb6286"
+  },
+  "historical_creation_record": {
+    "existing_skill_and_release_modified": false,
+    "applies_to": "Original social-kit production only; this import updates repository demonstration documentation."
+  },
+  "imported_as_demonstration": true,
+  "import": {
+    "source_package_name": "academic-deai-social-kit",
+    "destination": "examples/social-demo",
+    "source_manifest_sha256": "1964fadfb8f5126b4b0b1e539fcb4a7da52100dbc882acae38c575881e364cb1",
+    "source_material_version": "3.0.0",
+    "version_role": "Historical case execution version, not the new release version.",
+    "case_texts_reexecuted": false,
+    "case_original_and_revision_fingerprints_preserved": true,
+    "model_independent": true,
+    "platform_requirement": "Skill support or loading the editing instructions.",
+    "platform_performance_validation": "Not validated separately on each platform or model.",
+    "png_artwork": "Promotional artwork may be refreshed as documentation edits; the four cases retain historical execution version 3.0.0."
+  },
+  "source_file_fingerprints": {
+    "README.md": "5efee8b35f2d9dc561cf3bdccac83bd4ec7f8005a633a0120064ffc66bd081b0",
+    "cases/01-中文研究短文/修订稿.md": "69624e0451507704439917587191f271c79568a7d13462aa63206e3dd92f6acb",
+    "cases/01-中文研究短文/原稿.md": "fce7daedc552f8cffa20c7321fe3951e5d8d66d8d83a00973a36156ef5e6bcea",
+    "cases/01-中文研究短文/编辑说明.md": "b9282e5c6be7ad3498a83255274e9a8089fe1dd48c9137c52fb78965e613644f",
+    "cases/02-English-abstract/修订稿.md": "7d29d67d4e072e3fae60f3b9bca31968f36a9528b450f26681f8cec3f2f96f5e",
+    "cases/02-English-abstract/原稿.md": "71cc6a7bbbfdfe8aab4e374d8c083f590f60f82f1077598a4e43c93186e61d0b",
+    "cases/02-English-abstract/编辑说明.md": "1ad9c0ea3951b37d6a15afecf78109d1cc69d2bcee90377e8f672fa41bb5884d",
+    "cases/03-技术综述/修订稿.md": "228f081ad59277e266a62e45bd166d5a24c20530b2a4b3771a91c99a46ba37e4",
+    "cases/03-技术综述/原稿.md": "cfe03ed36f25c39003a6ee728a0f3df341e6b00b2053b09ee3d9076cc277bbe7",
+    "cases/03-技术综述/编辑说明.md": "d28ea96917ab84971546594361d98d4641c7b2f821e58ad598d5f35160a3de5e",
+    "cases/04-审稿回复/修订稿.md": "143a9e193ed132f88cea62a222916976bf9d8f2e47ff2087174acec4ee1ff9ad",
+    "cases/04-审稿回复/原稿.md": "67f3d5038267bf0743b66cdecdf2321dbd3f86def7351a97b9f03e35a9f66686",
+    "cases/04-审稿回复/编辑说明.md": "cdffa3db1e50bcbc0a056ef874dcf9e5ff32978a8fc8a6768c9be9a893914c88",
+    "制作记录.json": "1964fadfb8f5126b4b0b1e539fcb4a7da52100dbc882acae38c575881e364cb1",
+    "发布文案.md": "d08ef2f11e6357a97740f0d24c2489e21007d71520582ad19053e5f5fc854a1a",
+    "命题清单.json": "f14cf0fe74d6843c66254667fc792fcf2d3fe5dc6367a46e6288f9a5e79fdfd1",
+    "图文预览.html": "90aeaeef69153c908dcac53d939c4b62bc26e9a32d4680a54b2ac7c74f0bd363",
+    "核对记录.md": "2b0293d6d9f930e1589392c8a25a0f1546fa650bf3bbda8a664157334feb7419",
+    "核查资料/01-中文研究短文-content-lock.json": "f7d8838975e6542e740cbd825d57dfd72e0defcc7957f4795d30d8a02d0ebd38",
+    "核查资料/02-English-abstract-content-lock.json": "ecbb67a2fff483aa4496fc925d7451ab5a4d0205dea6a60a489f7b86a2b59c0e",
+    "核查资料/03-技术综述-content-lock.json": "b396ad0462632f88ea3405bafa7e5e4ff51d1ed2f45d35a47dd6b3d15829c2c7",
+    "核查资料/03-技术综述-first-content-lock.json": "28939846af48c0c50edff065d3aafa5e0063203ccc517b47b598d74cfacf8f63",
+    "核查资料/04-审稿回复-content-lock.json": "5c073ef9cf78ddec471d82f59cae8a161653dfbcfe85e1f6f74a475efc58d1b2",
+    "案例合集.md": "7e958f92aa2d4f20d86ab831b30c0efb7da74542a92d40a2f24fdf342d1ae52f",
+    "案例对照.html": "5c2f1cf45838fcc4dd24934509d53c2367c6dd6ebafd09da62816ccb3f538d7f",
+    "配图/01.png": "2ee12dab2d33d034e0fcc73dd5921a75ed81a48d38a197621a2cec86696df8f5",
+    "配图/02.png": "760a06b914a92c8514e7a19f89b956c6256ae68b345a05f80c3e2da6e27d20bf",
+    "配图/03.png": "796b8f76bae7a1e961876ceef210b7970646f582804f1094a47d96fce05e3320",
+    "配图/04.png": "2eab6eedff4f00cabd07c8c9c9269617e9bb5c904d3f1532d0dcd4221c34e101",
+    "配图/05.png": "f49fc37a063ce323fc60732690fab919592bdeb9ace406e9192bc3ac6bc57515",
+    "配图/06.png": "32ff944cf3dd713fe035de0e19a621e52dd717116206810f1d9536a0937d7f69",
+    "配图/总览.png": "b17b1f5194269aabe2f91a916d14e6ece0597f02d68f7acb5a705d8f4d20e0f3"
+  },
+  "documentation_edits": [
+    {
+      "path": "README.md",
+      "source_sha256": "5efee8b35f2d9dc561cf3bdccac83bd4ec7f8005a633a0120064ffc66bd081b0",
+      "imported_sha256": "6af44d07be9fba7f1952ab0c5a7e4249d5969ceea0e5677311a5d36bfbbc9682",
+      "description": "Model-independent publication and historical demonstration context."
+    },
+    {
+      "path": "发布文案.md",
+      "source_sha256": "d08ef2f11e6357a97740f0d24c2489e21007d71520582ad19053e5f5fc854a1a",
+      "imported_sha256": "a1aa4cdf4659cfda941c878121ad46621030d8f69b278355ef3b2a6d1858390b",
+      "description": "Model-independent publication and historical demonstration context."
+    },
+    {
+      "path": "核对记录.md",
+      "source_sha256": "2b0293d6d9f930e1589392c8a25a0f1546fa650bf3bbda8a664157334feb7419",
+      "imported_sha256": "0c3fd5f0720b26b7a7a9be5df69f932ca673d1ac4f3b76a57ff7ba04b809d5cb",
+      "description": "Append import context; retain original review findings, snapshot hashes and historical line references."
+    },
+    {
+      "path": "案例对照.html",
+      "source_sha256": "5c2f1cf45838fcc4dd24934509d53c2367c6dd6ebafd09da62816ccb3f538d7f",
+      "imported_sha256": "401542360ebd791aafe4aff8ef7ad33e19684c83df1940eb40727d2c945dfc19",
+      "description": "Model-independent publication and historical demonstration context."
+    },
+    {
+      "source_sha256": null,
+      "imported_sha256": "0f668c38bd1fdaedcdfe802e48318dda87dcb170f611d9b04892c4b7904c51cd",
+      "description": "New concise publication text and repository-relative links to full demonstration materials and platform installation instructions.",
+      "repository_path": "docs/promotion.md"
+    },
+    {
+      "path": "图文预览.html",
+      "source_sha256": "90aeaeef69153c908dcac53d939c4b62bc26e9a32d4680a54b2ac7c74f0bd363",
+      "imported_sha256": "a455806623f0bfd44ff6a371f2e019a48e9fab340cffbaa157c692e462ace10d",
+      "description": "Refresh publication to 3.1.0 and host-neutral latest-model positioning. Historical case execution remains 3.0.0."
+    },
+    {
+      "path": "配图/01.png",
+      "source_sha256": "2ee12dab2d33d034e0fcc73dd5921a75ed81a48d38a197621a2cec86696df8f5",
+      "imported_sha256": "04f2be81a8971ca78f7dcb6d8eab2a52d8b797e8c327e3410c6d4374292e625b",
+      "description": "Refresh publication to 3.1.0 and host-neutral latest-model positioning. Historical case execution remains 3.0.0."
+    },
+    {
+      "path": "配图/02.png",
+      "source_sha256": "760a06b914a92c8514e7a19f89b956c6256ae68b345a05f80c3e2da6e27d20bf",
+      "imported_sha256": "760a06b914a92c8514e7a19f89b956c6256ae68b345a05f80c3e2da6e27d20bf",
+      "description": "Refresh publication to 3.1.0 and host-neutral latest-model positioning. Historical case execution remains 3.0.0."
+    },
+    {
+      "path": "配图/03.png",
+      "source_sha256": "796b8f76bae7a1e961876ceef210b7970646f582804f1094a47d96fce05e3320",
+      "imported_sha256": "796b8f76bae7a1e961876ceef210b7970646f582804f1094a47d96fce05e3320",
+      "description": "Refresh publication to 3.1.0 and host-neutral latest-model positioning. Historical case execution remains 3.0.0."
+    },
+    {
+      "path": "配图/04.png",
+      "source_sha256": "2eab6eedff4f00cabd07c8c9c9269617e9bb5c904d3f1532d0dcd4221c34e101",
+      "imported_sha256": "2eab6eedff4f00cabd07c8c9c9269617e9bb5c904d3f1532d0dcd4221c34e101",
+      "description": "Refresh publication to 3.1.0 and host-neutral latest-model positioning. Historical case execution remains 3.0.0."
+    },
+    {
+      "path": "配图/05.png",
+      "source_sha256": "f49fc37a063ce323fc60732690fab919592bdeb9ace406e9192bc3ac6bc57515",
+      "imported_sha256": "f49fc37a063ce323fc60732690fab919592bdeb9ace406e9192bc3ac6bc57515",
+      "description": "Refresh publication to 3.1.0 and host-neutral latest-model positioning. Historical case execution remains 3.0.0."
+    },
+    {
+      "path": "配图/06.png",
+      "source_sha256": "32ff944cf3dd713fe035de0e19a621e52dd717116206810f1d9536a0937d7f69",
+      "imported_sha256": "5f1ba730337224441860eedfda795c36fa01a124d415e5017ebb3fea8a1a5ff0",
+      "description": "Refresh publication to 3.1.0 and host-neutral latest-model positioning. Historical case execution remains 3.0.0."
+    },
+    {
+      "path": "配图/总览.png",
+      "source_sha256": "b17b1f5194269aabe2f91a916d14e6ece0597f02d68f7acb5a705d8f4d20e0f3",
+      "imported_sha256": "43fb9a050e3b106b9ee00cc74e9a789285c74eb492a7d2c074f524fd38bb6286",
+      "description": "Refresh publication to 3.1.0 and host-neutral latest-model positioning. Historical case execution remains 3.0.0."
+    }
+  ],
+  "record_update": "Imported source cases preserved; current publication copy, installation links, PNG and HTML refreshed for 3.1.0.",
+  "publication_version": "3.1.0",
+  "model_positioning": "For the latest models across Agent platforms supporting Skills or loading editing instructions; not a multi-platform model benchmark."
+}

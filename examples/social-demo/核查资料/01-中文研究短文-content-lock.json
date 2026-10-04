@@ -1,0 +1,87 @@
+{
+  "tool": {
+    "name": "academic-content-lock",
+    "version": "1.0.0",
+    "semantic_equivalence": false
+  },
+  "sources": {
+    "before": {
+      "path": "cases/01-中文研究短文/原稿.md",
+      "kind": "markdown"
+    },
+    "after": {
+      "path": "cases/01-中文研究短文/修订稿.md",
+      "kind": "markdown"
+    }
+  },
+  "status": "review",
+  "summary": {
+    "high_risk_categories": 0,
+    "warning_categories": 3
+  },
+  "categories": {
+    "numbers": {
+      "before_count": 4,
+      "after_count": 4,
+      "removed": [],
+      "added": []
+    },
+    "citations": {
+      "before_count": 2,
+      "after_count": 2,
+      "removed": [],
+      "added": []
+    },
+    "identifiers": {
+      "before_count": 0,
+      "after_count": 0,
+      "removed": [],
+      "added": []
+    },
+    "protected_spans": {
+      "before_count": 0,
+      "after_count": 0,
+      "removed": [],
+      "added": []
+    },
+    "terms": {
+      "before_count": 0,
+      "after_count": 0,
+      "removed": [],
+      "added": []
+    },
+    "stance_negation": {
+      "before_count": 19,
+      "after_count": 16,
+      "removed": [
+        "不",
+        "不",
+        "不",
+        "没有"
+      ],
+      "added": [
+        "未"
+      ]
+    },
+    "stance_modality": {
+      "before_count": 4,
+      "after_count": 2,
+      "removed": [
+        "可以",
+        "将"
+      ],
+      "added": []
+    },
+    "stance_causal": {
+      "before_count": 3,
+      "after_count": 2,
+      "removed": [
+        "由于"
+      ],
+      "added": []
+    }
+  },
+  "interpretation_rules": [
+    "Differences are review signals, not proof that the revised text is semantically wrong."
+  ]
+}

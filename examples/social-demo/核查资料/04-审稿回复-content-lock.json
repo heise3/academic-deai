@@ -1,0 +1,79 @@
+{
+  "tool": {
+    "name": "academic-content-lock",
+    "version": "1.0.0",
+    "semantic_equivalence": false
+  },
+  "sources": {
+    "before": {
+      "path": "cases/04-审稿回复/原稿.md",
+      "kind": "markdown"
+    },
+    "after": {
+      "path": "cases/04-审稿回复/修订稿.md",
+      "kind": "markdown"
+    }
+  },
+  "status": "review",
+  "summary": {
+    "high_risk_categories": 0,
+    "warning_categories": 2
+  },
+  "categories": {
+    "numbers": {
+      "before_count": 3,
+      "after_count": 3,
+      "removed": [],
+      "added": []
+    },
+    "citations": {
+      "before_count": 0,
+      "after_count": 0,
+      "removed": [],
+      "added": []
+    },
+    "identifiers": {
+      "before_count": 0,
+      "after_count": 0,
+      "removed": [],
+      "added": []
+    },
+    "protected_spans": {
+      "before_count": 0,
+      "after_count": 0,
+      "removed": [],
+      "added": []
+    },
+    "terms": {
+      "before_count": 0,
+      "after_count": 0,
+      "removed": [],
+      "added": []
+    },
+    "stance_negation": {
+      "before_count": 3,
+      "after_count": 2,
+      "removed": [
+        "not"
+      ],
+      "added": []
+    },
+    "stance_modality": {
+      "before_count": 1,
+      "after_count": 0,
+      "removed": [
+        "can"
+      ],
+      "added": []
+    },
+    "stance_causal": {
+      "before_count": 0,
+      "after_count": 0,
+      "removed": [],
+      "added": []
+    }
+  },
+  "interpretation_rules": [
+    "Differences are review signals, not proof that the revised text is semantically wrong."
+  ]
+}

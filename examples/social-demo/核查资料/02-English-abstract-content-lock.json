@@ -1,0 +1,87 @@
+{
+  "tool": {
+    "name": "academic-content-lock",
+    "version": "1.0.0",
+    "semantic_equivalence": false
+  },
+  "sources": {
+    "before": {
+      "path": "cases/02-English-abstract/原稿.md",
+      "kind": "markdown"
+    },
+    "after": {
+      "path": "cases/02-English-abstract/修订稿.md",
+      "kind": "markdown"
+    }
+  },
+  "status": "review",
+  "summary": {
+    "high_risk_categories": 0,
+    "warning_categories": 3
+  },
+  "categories": {
+    "numbers": {
+      "before_count": 6,
+      "after_count": 6,
+      "removed": [],
+      "added": []
+    },
+    "citations": {
+      "before_count": 2,
+      "after_count": 2,
+      "removed": [],
+      "added": []
+    },
+    "identifiers": {
+      "before_count": 0,
+      "after_count": 0,
+      "removed": [],
+      "added": []
+    },
+    "protected_spans": {
+      "before_count": 0,
+      "after_count": 0,
+      "removed": [],
+      "added": []
+    },
+    "terms": {
+      "before_count": 0,
+      "after_count": 0,
+      "removed": [],
+      "added": []
+    },
+    "stance_negation": {
+      "before_count": 10,
+      "after_count": 8,
+      "removed": [
+        "not",
+        "not",
+        "not"
+      ],
+      "added": [
+        "without"
+      ]
+    },
+    "stance_modality": {
+      "before_count": 3,
+      "after_count": 2,
+      "removed": [
+        "would"
+      ],
+      "added": []
+    },
+    "stance_causal": {
+      "before_count": 3,
+      "after_count": 3,
+      "removed": [
+        "because"
+      ],
+      "added": [
+        "associated with"
+      ]
+    }
+  },
+  "interpretation_rules": [
+    "Differences are review signals, not proof that the revised text is semantically wrong."
+  ]
+}
