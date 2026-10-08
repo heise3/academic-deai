@@ -87,14 +87,6 @@ cp -R academic-deai ~/.agents/skills/academic-deai
 
 无需安装 Humanizer，也不自动串联其他编辑器。结构编辑思路参考 Humanizer 3.1.0；来源与学术适配见[设计记录](docs/design.md)。
 
-## 宣传文案与配图
-
-[发布文案入口](docs/promotion.md)提供小红书、知乎／公众号、朋友圈短文和视频脚本；[六张配图](examples/social-demo/README.md)可直接下载使用。[Release](https://github.com/heise3/academic-deai/releases/latest)提供完整 Skill 与独立宣传包。
-
-![Academic DeAI 宣传图总览：四组合成案例与使用方式](examples/social-demo/配图/总览.png)
-
-配图中的研究、数据、引文编号和投稿改动均为虚构。HTML对照和卡片源文件可下载后用浏览器打开、编辑，不依赖在线服务。
-
 ## 工具与验证
 
 可选文本核查工具需要 **Python 3.10+** 与标准库。模型执行改写，脚本检查可观察差异。
