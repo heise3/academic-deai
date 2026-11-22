@@ -207,7 +207,7 @@ class StyleAuditCliIntegrationTests(unittest.TestCase):
         result = self.run_cli("--version")
 
         self.assertEqual(result.returncode, 0)
-        self.assertEqual(result.stdout, "style_audit.py 1.1.0\n")
+        self.assertEqual(result.stdout, "style_audit.py 1.2.0\n")
         self.assertEqual(result.stderr, "")
 
     def test_chinese_markdown_matches_v1_golden_byte_for_byte(self) -> None:
@@ -243,7 +243,7 @@ class StyleAuditCliIntegrationTests(unittest.TestCase):
 
         self.assertEqual(result.returncode, 0)
         self.assertEqual(result.stderr, "")
-        self.assertEqual((actual_version, expected_version), ("1.1.0", "1.0.1"))
+        self.assertEqual((actual_version, expected_version), ("1.2.0", "1.0.1"))
         self.assertEqual(actual, expected)
 
     def test_stdin_json_is_real_subprocess_input_and_deterministic(self) -> None:

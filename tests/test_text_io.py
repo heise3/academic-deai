@@ -114,6 +114,30 @@ class TextIOTests(unittest.TestCase):
         self.assertEqual(source.source_kind, "docx")
         self.assertEqual(source.warnings, ())
 
+    def test_docx_classifies_abstract_heading_caption_table_and_references(self) -> None:
+        structured_xml = b"""<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<w:document xmlns:w="http://schemas.openxmlformats.org/wordprocessingml/2006/main">
+  <w:body>
+    <w:p><w:r><w:t>\xe3\x80\x90\xe6\x91\x98\xe8\xa6\x81\xe3\x80\x91 \xe8\xbf\x99\xe6\x98\xaf\xe4\xb8\xad\xe6\x96\x87\xe6\x91\x98\xe8\xa6\x81\xe3\x80\x82</w:t></w:r></w:p>
+    <w:p><w:r><w:t>1 \xe5\xbc\x95\xe8\xa8\x80</w:t></w:r></w:p>
+    <w:p><w:r><w:t>\xe6\xad\xa3\xe6\x96\x87\xe5\x86\x85\xe5\xae\xb9\xe3\x80\x82</w:t></w:r></w:p>
+    <w:tbl><w:tr><w:tc><w:p><w:r><w:t>Col1</w:t></w:r></w:p></w:tc><w:tc><w:p><w:r><w:t>Col2</w:t></w:r></w:p></w:tc></w:tr></w:tbl>
+    <w:p><w:r><w:t>\xe6\xb3\xa8\xef\xbc\x9a\xe5\x9b\xbe\xe6\xb3\xa8\xe8\xaf\xb4\xe6\x98\x8e\xe3\x80\x82</w:t></w:r></w:p>
+    <w:p><w:r><w:t>\xe5\x8f\x82\xe8\x80\x83\xe6\x96\x87\xe7\x8c\xae</w:t></w:r></w:p>
+    <w:p><w:r><w:t>[1] Ref one.</w:t></w:r></w:p>
+  </w:body>
+</w:document>"""
+        with tempfile.TemporaryDirectory() as temporary_directory:
+            path = Path(temporary_directory) / "structured.docx"
+            self.write_docx(path, structured_xml)
+            source = text_io.read_source(str(path))
+
+        kinds = [b.kind for b in source.blocks]
+        self.assertEqual(
+            kinds,
+            ["abstract", "heading", "prose", "table_row", "caption", "reference", "reference"],
+        )
+
     def test_empty_docx_body_returns_explicit_empty_source(self) -> None:
         empty_xml = b"""<?xml version="1.0" encoding="UTF-8"?>
 <w:document xmlns:w="http://schemas.openxmlformats.org/wordprocessingml/2006/main">

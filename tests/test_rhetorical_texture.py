@@ -123,8 +123,45 @@ class RhetoricalTextureCliTests(unittest.TestCase):
     def test_version(self) -> None:
         result = self.run_cli("--version")
         self.assertEqual(result.returncode, 0)
-        self.assertEqual(result.stdout, "rhetorical_texture.py 1.0.0\n")
+        self.assertEqual(result.stdout, "rhetorical_texture.py 1.1.0\n")
         self.assertEqual(result.stderr, "")
+
+    def test_plain_numbered_sections_and_high_risk_zones_are_detected(self) -> None:
+        doc = (
+            "【摘要】 本文梳理术后炎症机制，在脑内小胶质细胞中促炎，在外周巨噬细胞中却抑制炎症；"
+            "既参与氧化应激，也参与自噬清除；并结合试验结果分析时机；从而展望未来。\n\n"
+            "【Abstract】 We first summarize surgical trauma. Three downstream processes are discussed, "
+            "highlighting translational hurdles.\n\n"
+            "1 术后海马炎症\n\n"
+            "小鼠胫骨骨折手术后海马白细胞介素升高，阻断受体可改善空间记忆。\n\n"
+            "2 通路活化特征\n\n"
+            "老龄小鼠术后第7天海马磷酸化达到最高点，第14天仍高于对照。\n\n"
+            "3 潜在分子机制\n\n"
+            "急性脑缺血模型显示小胶质细胞敲除激酶可减轻脑损伤。\n\n"
+            "4 临床转化前景\n\n"
+            "将其推向临床仍需面对给药选择性与干预时机两道难题。如果过晚给药均有可能抵消保护效果，"
+            "是目前临床可行度最高的做法。\n\n"
+            "注：" + ("老龄小鼠术后外周炎症传至海马伴磷酸化升高并诱发小胶质细胞活化与神经元氧化凋亡。" * 5)
+            + "PND：围术期神经认知障碍。\n\n"
+            "参考文献\n\n"
+            "[1] Author A. Title[J]. Journal, 2024, 1(1): 1-5."
+        )
+        report = rhetorical_texture.build_report(doc, suffix=".txt", language="zh")
+        self.assertEqual(report["document"]["body_section_count"], 4)
+        warning_codes = {item["code"] for item in report["warnings"]}
+        self.assertIn("T09_ABSTRACT_SYNTHESIS_OR_ROADMAP", warning_codes)
+        self.assertIn("T10_COUNSEL_AND_HYPOTHETICAL_SATURATION", warning_codes)
+        self.assertIn("T11_NARRATIVE_CAPTION_RECAP", warning_codes)
+        self.assertNotIn("Author A", "\n".join(s["section"] for s in report["sections"]))
+
+    def test_pure_abbreviation_table_note_does_not_trigger_t11(self) -> None:
+        glossary_note = (
+            "注：" + "；".join(f"GENE{i}：示例蛋白与信号通路分子名称定义{i}" for i in range(1, 20)) + "。"
+        )
+        doc = "1 引言\n\n简短正文。\n\n" + glossary_note
+        report = rhetorical_texture.build_report(doc, suffix=".txt", language="zh")
+        warning_codes = {item["code"] for item in report["warnings"]}
+        self.assertNotIn("T11_NARRATIVE_CAPTION_RECAP", warning_codes)
 
     def test_strict_json_failure_returns_one(self) -> None:
         with tempfile.TemporaryDirectory() as directory_name:
