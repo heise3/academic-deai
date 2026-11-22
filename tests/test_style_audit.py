@@ -230,7 +230,7 @@ class StyleAuditCharacterizationTests(unittest.TestCase):
             first["tool"],
             {
                 "name": "academic-prose-pattern-audit",
-                "version": "1.1.0",
+                "version": "1.2.0",
                 "authorship_inference": False,
                 "detector_score_prediction": False,
                 "disclaimer": (
@@ -271,9 +271,54 @@ class StyleAuditCharacterizationTests(unittest.TestCase):
         )
 
         self.assertEqual(report["tool"]["name"], "academic-prose-pattern-audit")
-        self.assertEqual(report["tool"]["version"], "1.1.0")
+        self.assertEqual(report["tool"]["version"], "1.2.0")
         self.assertEqual(report["formulaic_language"]["triadic_list_candidate_count"], 1)
         self.assertEqual(report["formulaic_language"]["transitions"][0]["term"], "however")
+
+    def test_modern_en_and_zh_synthesis_patterns_are_detected(self) -> None:
+        en_text = (
+            "We first summarize hippocampal signaling. Three downstream processes are discussed: "
+            "microglia versus macrophages and apoptosis versus mitophagy, highlighting translational hurdles."
+        )
+        en_report = style_metrics.build_report(en_text, "en", 1, 10)
+        en_labels = {item["phrase"] for item in en_report["formulaic_language"].get("modern_patterns", ())}
+        self.assertIn("meta-roadmap review lead", en_labels)
+        self.assertIn("numbered axes/domains discussed", en_labels)
+        self.assertIn("paired versus contrast chain", en_labels)
+        self.assertIn("participial tail clause", en_labels)
+        self.assertIn("generic translational/outlook closer", en_labels)
+
+        zh_text = (
+            "将其推向临床仍需面对给药选择性与干预时机两道难题。"
+            "在脑内小胶质细胞中促炎，在外周巨噬细胞中却抑制炎症。"
+            "如果过晚给药均有可能抵消保护效果，是目前临床可行度最高的做法。"
+        )
+        zh_report = style_metrics.build_report(zh_text, "zh", 1, 10)
+        zh_labels = {item["phrase"] for item in zh_report["formulaic_language"].get("modern_patterns", ())}
+        self.assertIn("两道难题/两方面考量框架", zh_labels)
+        self.assertIn("对称对照压缩句（在……中……，在……中却/则……）", zh_labels)
+        self.assertIn("条件推演建议腔（如果/若……反而/均有可能……）", zh_labels)
+        self.assertIn("临床可行/积累依据套壳尾", zh_labels)
+
+    def test_bilingual_secondary_english_abstract_is_audited_inside_chinese_paper(self) -> None:
+        mixed_doc = (
+            "老年患者接受麻醉和手术后常出现围术期神经认知障碍。小鼠胫骨骨折手术模型显示海马炎症因子升高，"
+            "阻断白细胞介素受体可改善空间学习记忆表现。老龄小鼠术后海马磷酸化水平在第7天达到峰值，第14天仍高于对照。\n\n"
+            "Abstract: We first summarize surgical neuroinflammation in aged mice. "
+            "Three downstream processes are discussed: microglia versus macrophages and oxidative injury versus mitophagy, "
+            "highlighting translational hurdles that will help clarify clinical strategies."
+        )
+        primary_lang = style_metrics.detect_language(mixed_doc)
+        self.assertEqual(primary_lang, "zh")
+        report = style_metrics.build_report(mixed_doc, primary_lang, 1, 10)
+        secondary = report["formulaic_language"].get("bilingual_secondary_audit")
+        self.assertIsNotNone(secondary)
+        self.assertEqual(secondary["secondary_language"], "en")
+        sec_labels = {item["phrase"] for item in secondary["modern_patterns"]}
+        self.assertIn("meta-roadmap review lead", sec_labels)
+        self.assertIn("numbered axes/domains discussed", sec_labels)
+        md = style_render.render_markdown(report, "zh")
+        self.assertIn("嵌套双语区块审计", md)
 
 
 class NewModuleImportTests(unittest.TestCase):

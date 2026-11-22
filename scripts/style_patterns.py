@@ -83,6 +83,46 @@ EN_STOCK_PATTERNS: list[tuple[str, str]] = [
     ("not only ... but also", r"\bnot only\b.{0,160}?\bbut also\b"),
 ]
 
+# Modern (2025-2026) English academic synthesis & review-roadmap patterns that often
+# survive classic stock-phrase removal in abstracts, reviews, and discussions.
+EN_MODERN_AI_PATTERNS: list[tuple[str, str]] = [
+    (
+        "meta-roadmap review lead",
+        r"\b(?:we\s+(?:first|then|next|also)\s+(?:summarize|outline|compare|examine|detail|discuss|review)"
+        r"|this\s+review\s+(?:outlines|summarizes|contrasts|examines|details))\b",
+    ),
+    (
+        "numbered axes/domains discussed",
+        r"\b(?:two|three|four)\s+(?:key|main|core|major|potential|downstream)?\s*"
+        r"(?:mechanisms?|axes|domains?|processes?|pathways?|themes?|dimensions?)\s+"
+        r"are\s+(?:discussed|examined|reviewed|outlined|explored)\b",
+    ),
+    (
+        "passive review-regarding clause",
+        r"\bare\s+also\s+(?:reviewed|discussed|examined)\s+(?:regarding|concerning|with respect to)\b",
+    ),
+    (
+        "participial tail clause",
+        r",\s+(?:highlighting|underscoring|reflecting|demonstrating|suggesting|involving|"
+        r"informing|illuminating|shedding light on|paving the way|followed by|paired with|alongside)\b",
+    ),
+    (
+        "paired versus contrast chain",
+        r"\bversus\b[^.;!?]{1,90}\bversus\b",
+    ),
+    (
+        "verb-stack abstract summary",
+        r"\b(?:outlines|summarizes|contrasts|examines|details)\b[^.;!?]{1,90}"
+        r"\b(?:summarizes|contrasts|examines|details)\b",
+    ),
+    (
+        "generic translational/outlook closer",
+        r"\b(?:will help (?:clarify|evaluate|inform)|help clarify[^.;!?]{0,40}and inform|"
+        r"translational hurdles?|pave the way|offer (?:novel|valuable|new) insights?|"
+        r"inform (?:future|clinical|perioperative) (?:practice|strategies|neuroprotection))\b",
+    ),
+]
+
 ZH_STOCK_PATTERNS: list[tuple[str, str]] = [
     ("值得注意的是", r"值得注意的是"),
     ("需要指出的是", r"需要指出的是"),
@@ -100,6 +140,48 @@ ZH_STOCK_PATTERNS: list[tuple[str, str]] = [
     ("全方位", r"全方位"),
     ("赋能", r"赋能"),
     ("深刻揭示", r"深刻揭示"),
+]
+
+# Modern (2025-2026) Chinese academic synthesis, symmetrical compression, and
+# conditional counsel patterns observed in reviews, abstracts, and discussions.
+ZH_MODERN_AI_PATTERNS: list[tuple[str, str]] = [
+    (
+        "对称平衡句（既……又/也……）",
+        r"既[可也能会]?[^。！？；]{2,45}[，、]\s*(?:又|也|亦)[可也能会]?",
+    ),
+    (
+        "对称对照压缩句（在……中……，在……中却/则……）",
+        r"在[^，。；]{2,22}中[^，。；]{2,28}[，,]\s*在[^，。；]{2,22}中(?:却|则)",
+    ),
+    (
+        "两道难题/两方面考量框架",
+        r"(?:面临|面对|存在|仍有)[^，。]{0,16}(?:两道难题|两方面(?:现实)?考量|两大(?:障碍|挑战|难题))",
+    ),
+    (
+        "序号列举框架（其一/首先是/第一是）",
+        r"(?:其一|首先是|第一是)[^。！？]{4,140}(?:其二|其次是|第二是)",
+    ),
+    (
+        "元叙述路标与综述套动词",
+        r"(?:(?:本文|本综述)(?:紧扣|围绕|梳理|概述|重点探讨|系统梳理|以[^，。]{2,18}为切入点)"
+        r"|从[^，。]{2,16}角度提供了参考|结合[^，。]{2,28}的结果来看)",
+    ),
+    (
+        "多层次网络/勾勒总结腔",
+        r"(?:共同)?(?:勾勒|构成)[^，。]{0,22}(?:作用网络|多层次|多环节机制)",
+    ),
+    (
+        "条件推演建议腔（如果/若……反而/均有可能……）",
+        r"(?:如果|若)[^。！？]{2,90}(?:反而可能|均有可能|有可能抵消|应尽量限定|才能明确)",
+    ),
+    (
+        "临床可行/积累依据套壳尾",
+        r"(?:是目前临床[^，。]{2,14}的做法|为后续[^，。]{2,26}(?:积累依据|积累基线|积累临床数据|打下基础|提供参考))",
+    ),
+    (
+        "抽象节点评价套话",
+        r"(?:的把握同样关键|是连接[^，。]{2,22}最直接的|高度取决于)",
+    ),
 ]
 
 EN_TRANSITIONS = [

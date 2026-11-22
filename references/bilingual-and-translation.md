@@ -6,8 +6,9 @@
 2. 翻译前的内容锁
 3. 中文论文英译
 4. 英文论文中译
-5. 作者声音校准
-6. 翻译后验证
+5. 中文期刊配套英文摘要校准
+6. 作者声音校准
+7. 翻译后验证
 
 ## 1. 核心原则
 
@@ -90,7 +91,32 @@
 - 按中文逻辑重排修饰语，但保持条件、否定和比较关系。
 - 不新增评价词，不扩大结论。
 
-## 5. 作者声音校准
+## 5. 中文期刊配套英文摘要校准
+
+中文核心期刊普遍要求配套英文摘要（结构式四要素或指示性摘要）。在混合双语稿件中，英文摘要虽只占篇幅一隅，却常因以下模板化写法成为整稿最显眼的非自然区块：
+
+- 连续使用综述元路标动词：`This review outlines..., summarizes..., contrasts..., and details...` 或 `We first summarize... We then compare... Three downstream processes are discussed... are also reviewed regarding...`；
+- 完整主句末尾反复悬挂现在分词或介词尾巴：`, highlighting...`, `, involving...`, `, followed by...`, `, paired with...`, `, alongside...`；
+- 过度工整的二元镜像对仗：`X versus Y, A versus B, and C`；
+- 空泛转化收尾：`will help clarify and inform`, `translational hurdles`, `pave the way for clinical application`。
+
+### 校准做法
+
+- 直接用主语和实义动词报告模型、指标、方向与临床试验结局，删去多余的 `We first summarize / are discussed` 外壳；
+- 保持英文摘要紧凑（中文期刊结构式英文摘要通常 150–220 词即可），不把中文分号长句硬翻成嵌套英文从句；
+- 对含英文摘要的中文稿件，使用 `scripts/style_audit.py` 的嵌套双语区块审计检查英文段落是否触发次语种现代模板信号。
+
+### 例型
+
+模板化：
+
+> We first summarize how peripheral trauma triggers hippocampal inflammation. Three downstream processes are discussed: opposite regulation in microglia versus macrophages, oxidative stress versus mitophagy, and synaptic receptor assembly, followed by clinical lessons alongside translational hurdles.
+
+直述化：
+
+> Peripheral surgical trauma transmits inflammatory signals to the hippocampus. In aged mice undergoing tibial fracture fixation, hippocampal MST phosphorylation peaks on day 7 and remains elevated on day 14, whereas pharmacological inhibition lowers TNF-α and IL-1β and improves spatial memory. Randomized trials of dexmedetomidine show lower delirium rates after postoperative infusion but not intraoperative infusion alone.
+
+## 6. 作者声音校准
 
 若用户提供本人写作样本，使用已有样本即可，不要求固定篇数。具体决策见 [作者声音与读者背景](voice-and-context.md)：
 
@@ -110,7 +136,7 @@
 
 不要把平均句长或段落长度当作必须复制的目标。
 
-## 6. 翻译后验证
+## 7. 翻译后验证
 
 逐项对照源文：
 

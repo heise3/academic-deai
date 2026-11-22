@@ -5,7 +5,8 @@ This tool is deliberately not an AI detector. It reports observable editorial
 patterns that can survive ordinary stock-phrase cleanup: paragraph-count
 homogeneity, uniform paragraph geometry, corrective-negation saturation,
 reviewer/adjudication meta-voice, repeated claim-boundary-recommendation sets,
-and uniform section closures.
+uniform section closures, and high-risk zone templating in bilingual abstracts,
+conditional-counsel discussions, narrative figure captions, and prose-heavy tables.
 
 The default output is a review queue. ``--anti-template-strict`` promotes a
 *combination* of strong template signals to a hard failure; no single weak
@@ -18,7 +19,6 @@ from __future__ import annotations
 import argparse
 import html
 import json
-import math
 import re
 import statistics
 import sys
@@ -27,13 +27,33 @@ from dataclasses import dataclass
 from pathlib import Path
 from typing import Any, Iterable, Mapping, Sequence
 
-from style_metrics import clean_text, detect_language, paragraphs_from_text, split_sentences
-from text_io import read_source
+from style_metrics import (
+    clean_text,
+    count_patterns,
+    detect_block_language,
+    detect_language,
+    paragraphs_from_text,
+    split_sentences,
+)
+from style_patterns import EN_MODERN_AI_PATTERNS, ZH_MODERN_AI_PATTERNS
+from text_io import SourceBlock, read_source
 
-VERSION = "1.0.0"
+VERSION = "1.1.0"
 
 _HEADING_RE = re.compile(r"^(?P<marks>#{1,6})\s+(?P<title>.+?)\s*$", re.MULTILINE)
 _NUMBERED_HEADING_RE = re.compile(r"^\s*(?P<num>\d+)(?:[.、)]|\s)")
+_PLAIN_NUMBERED_HEADING_LINE_RE = re.compile(
+    r"^(?P<title>(?:(?P<num>\d+(?:\.\d+){0,2})|[一二三四五六七八九十]+、)[\s　]+[^\s].{0,60})$"
+)
+_REFERENCE_HEADING_LINE_RE = re.compile(
+    r"^(?:参考文献|references?|bibliography|works cited)\s*[:：]?\s*$",
+    flags=re.IGNORECASE,
+)
+_ABSTRACT_LINE_RE = re.compile(
+    r"^(?:【\s*(?:摘要|abstract)\s*】|\[\s*(?:摘要|abstract)\s*\]|(?:摘要|abstract)\s*[:：\s　])",
+    flags=re.IGNORECASE,
+)
+_CAPTION_NOTE_RE = re.compile(r"^(?:注\s*[:：]|note\s*[:：])", flags=re.IGNORECASE)
 _CJK_RE = re.compile(r"[\u3400-\u4dbf\u4e00-\u9fff]")
 _EN_WORD_RE = re.compile(r"[A-Za-z]+(?:['’\-][A-Za-z]+)*")
 _REFERENCE_HINTS = ("reference", "references", "参考文献", "来源核验", "source-verification")
@@ -95,9 +115,6 @@ _CORRECTIVE_PATTERNS: dict[str, tuple[str, ...]] = {
     ),
 }
 
-# Meta-adjudication language can be useful occasionally. Repetition across many
-# sections, especially in section endings, often turns a review into an editor's
-# checklist rather than a natural synthesis.
 _META_ADJUDICATION: dict[str, tuple[tuple[str, str], ...]] = {
     "zh": (
         ("作者判断", r"作者判断"),
@@ -161,16 +178,60 @@ def _numbered(title: str) -> bool:
     return bool(_NUMBERED_HEADING_RE.match(title.strip()))
 
 
+def _strip_reference_tail(raw_text: str) -> str:
+    """Drop trailing bibliography section from plain-text or DOCX dumps."""
+    lines = raw_text.splitlines()
+    for idx, line in enumerate(lines):
+        if _REFERENCE_HEADING_LINE_RE.match(line.strip()):
+            return "\n".join(lines[:idx]).strip()
+    return raw_text
+
+
+def _is_plain_numbered_heading(line: str) -> tuple[bool, int]:
+    stripped = line.strip()
+    if not stripped or len(stripped) > 65:
+        return False, 0
+    if re.search(r"[。！？!?；;]\s*$", stripped):
+        return False, 0
+    m = _PLAIN_NUMBERED_HEADING_LINE_RE.match(stripped)
+    if not m:
+        return False, 0
+    num = m.group("num") or ""
+    if not num:
+        return True, 1
+    depth = num.count(".") + 1
+    return True, depth
+
+
 def parse_sections(raw_text: str) -> list[Section]:
     matches = list(_HEADING_RE.finditer(raw_text))
-    if not matches:
-        return [Section(level=1, title="Document", body=raw_text)]
-    out: list[Section] = []
-    for index, match in enumerate(matches):
-        start = match.end()
-        end = matches[index + 1].start() if index + 1 < len(matches) else len(raw_text)
-        out.append(Section(len(match.group("marks")), match.group("title").strip(), raw_text[start:end].strip()))
-    return out
+    if matches:
+        out: list[Section] = []
+        for index, match in enumerate(matches):
+            start = match.end()
+            end = matches[index + 1].start() if index + 1 < len(matches) else len(raw_text)
+            out.append(Section(len(match.group("marks")), match.group("title").strip(), raw_text[start:end].strip()))
+        return out
+
+    # Plain-text / DOCX numbered headings (e.g., "1 引言", "2.1 机制", "一、概述")
+    body_text = _strip_reference_tail(raw_text)
+    lines = body_text.splitlines()
+    heading_positions: list[tuple[int, int, str]] = []
+    for idx, line in enumerate(lines):
+        is_h, level = _is_plain_numbered_heading(line)
+        if is_h:
+            heading_positions.append((idx, level, line.strip()))
+    if not heading_positions:
+        return [Section(level=1, title="Document", body=body_text)]
+
+    out = []
+    for i, (line_idx, level, title) in enumerate(heading_positions):
+        next_idx = heading_positions[i + 1][0] if i + 1 < len(heading_positions) else len(lines)
+        section_body = "\n".join(lines[line_idx + 1 : next_idx]).strip()
+        # Keep top-level sections or leaf numbered sections with prose
+        if section_body:
+            out.append(Section(level=level, title=title, body=section_body))
+    return out or [Section(level=1, title="Document", body=body_text)]
 
 
 def _body_sections(sections: Sequence[Section]) -> list[Section]:
@@ -240,11 +301,128 @@ def _meta_hits(text: str, language: str) -> list[dict[str, Any]]:
     return sorted(out, key=lambda row: (-row["count"], row["label"]))
 
 
-def build_report(raw_text: str, *, suffix: str = ".md", language: str = "auto", anti_template_strict: bool = False) -> dict[str, Any]:
-    cleaned = clean_text(raw_text, suffix)
+def _audit_high_risk_zones(
+    raw_text: str,
+    sections: Sequence[Section],
+    blocks: Sequence[SourceBlock] = (),
+) -> dict[str, Any]:
+    """Audit abstracts, conditional-counsel clusters, figure captions, and prose-heavy tables."""
+    # 1. Abstract blocks (both ZH and EN)
+    abstract_texts: list[str] = []
+    if blocks:
+        abstract_texts.extend(b.text for b in blocks if b.kind == "abstract")
+    else:
+        for para in paragraphs_from_text(_strip_reference_tail(raw_text), 4):
+            if _ABSTRACT_LINE_RE.match(para):
+                abstract_texts.append(para)
+
+    abstract_findings: list[dict[str, Any]] = []
+    for ab in abstract_texts:
+        lang = detect_block_language(ab)
+        if lang == "en":
+            hits = count_patterns(ab, EN_MODERN_AI_PATTERNS, 10)
+        elif lang == "zh":
+            hits = count_patterns(ab, ZH_MODERN_AI_PATTERNS, 10)
+        else:
+            hits = count_patterns(ab, ZH_MODERN_AI_PATTERNS + EN_MODERN_AI_PATTERNS, 10)
+        semicolons = ab.count(";") + ab.count("；")
+        abstract_findings.append(
+            {
+                "language": lang,
+                "characters": len(ab),
+                "semicolons": semicolons,
+                "modern_pattern_hits": hits,
+                "modern_pattern_total": sum(h["count"] for h in hits),
+            }
+        )
+
+    # 2. Modern synthesis / conditional-counsel clustering per body section
+    counsel_sections: list[dict[str, Any]] = []
+    for section in sections:
+        zh_hits = count_patterns(section.body, ZH_MODERN_AI_PATTERNS, 10)
+        en_hits = count_patterns(section.body, EN_MODERN_AI_PATTERNS, 10)
+        combined = zh_hits + en_hits
+        total_hits = sum(h["count"] for h in combined)
+        if total_hits >= 2:
+            counsel_sections.append(
+                {
+                    "section": section.title,
+                    "modern_pattern_total": total_hits,
+                    "patterns": combined,
+                }
+            )
+
+    # 3. Narrative figure caption check (excluding abbreviation glossary tail)
+    caption_texts: list[str] = []
+    if blocks:
+        caption_texts.extend(b.text for b in blocks if b.kind == "caption" and _CAPTION_NOTE_RE.match(b.text))
+    else:
+        for para in paragraphs_from_text(_strip_reference_tail(raw_text), 4):
+            if _CAPTION_NOTE_RE.match(para):
+                caption_texts.append(para)
+
+    narrative_captions: list[dict[str, Any]] = []
+    for cap in caption_texts:
+        # Strip abbreviation glossary entries (either trailing after a sentence or starting directly after "注：")
+        narrative_part = re.sub(r"^(?:注|note)\s*[:：]\s*", "", cap, flags=re.IGNORECASE)
+        narrative_part = re.split(r"[。.]\s*[A-Za-z↑↓][A-Za-z0-9/\-αβγκ↑↓]*\s*[:：]", narrative_part, maxsplit=1)[0]
+        kept_segments = [
+            seg.strip()
+            for seg in re.split(r"[；;]", narrative_part)
+            if seg.strip() and not re.match(r"^[A-Za-z↑↓][A-Za-z0-9/\-αβγκ↑↓]*\s*[:：]", seg.strip())
+        ]
+        narrative_part = "；".join(kept_segments)
+        cjk_len = len(_CJK_RE.findall(narrative_part))
+        en_len = len(_EN_WORD_RE.findall(narrative_part))
+        if cjk_len > 130 or en_len > 75:
+            narrative_captions.append(
+                {
+                    "narrative_cjk_chars": cjk_len,
+                    "narrative_en_words": en_len,
+                    "excerpt": narrative_part[:120],
+                }
+            )
+
+    # 4. Prose-heavy table rows check (DOCX structured table rows)
+    table_rows = [b.text for b in blocks if b.kind == "table_row"]
+    prose_heavy_rows = 0
+    for row_text in table_rows[1:]:  # skip header row
+        cells = [c.strip() for c in row_text.split("|")]
+        clause_cells = sum(
+            1 for cell in cells if (cell.count("，") + cell.count("；") + cell.count("。")) >= 2 and len(cell) >= 24
+        )
+        if clause_cells >= 2:
+            prose_heavy_rows += 1
+
+    return {
+        "abstracts": abstract_findings,
+        "counsel_clustered_sections": counsel_sections,
+        "narrative_captions": narrative_captions,
+        "table_row_count": max(0, len(table_rows) - 1) if table_rows else 0,
+        "prose_heavy_table_rows": prose_heavy_rows,
+    }
+
+
+def build_report(
+    raw_text: str,
+    *,
+    suffix: str = ".md",
+    language: str = "auto",
+    anti_template_strict: bool = False,
+    blocks: Sequence[SourceBlock] = (),
+) -> dict[str, Any]:
+    if blocks:
+        prose_text = "\n\n".join(
+            b.text for b in blocks if b.kind in {"prose", "heading"}
+        )
+        effective_raw = prose_text if prose_text.strip() else raw_text
+    else:
+        effective_raw = _strip_reference_tail(raw_text)
+
+    cleaned = clean_text(effective_raw, suffix)
     resolved = detect_language(cleaned) if language == "auto" else language
     move_language = "zh" if resolved == "zh" else "en"
-    sections = _body_sections(parse_sections(raw_text))
+    sections = _body_sections(parse_sections(effective_raw))
 
     section_rows: list[dict[str, Any]] = []
     all_paragraph_lengths: list[int] = []
@@ -332,6 +510,8 @@ def build_report(raw_text: str, *, suffix: str = ".md", language: str = "auto", 
     boundary_ratio = boundary_count / total_sentences if total_sentences else 0.0
     recommendation_ratio = recommendation_count / total_sentences if total_sentences else 0.0
 
+    high_risk_zones = _audit_high_risk_zones(raw_text, sections, blocks)
+
     warnings: list[dict[str, Any]] = []
     strong_codes: set[str] = set()
 
@@ -358,20 +538,56 @@ def build_report(raw_text: str, *, suffix: str = ".md", language: str = "auto", 
         warnings.append({"code": code, "message": f"Reviewer/adjudication meta-language occurs {sum(row['count'] for row in meta_hits)} times across {meta_sections}/{n_sections or 0} sections."})
         strong_codes.add(code)
 
-    if n_sections >= 8 and closure_judgement_coverage >= 0.75:
+    if n_sections >= 4 and closure_judgement_coverage >= 0.75:
         code = "T06_UNIFORM_ADJUDICATIVE_SECTION_ENDINGS"
         warnings.append({"code": code, "message": f"{closure_judgement_coverage:.1%} of body sections end with an explicit judgement, boundary, priority, or chapter-level adjudication move."})
-        strong_codes.add(code)
+        if n_sections >= 8:
+            strong_codes.add(code)
 
-    if n_sections >= 8 and all_three_coverage >= 0.75:
+    if n_sections >= 4 and all_three_coverage >= 0.75:
         code = "T07_ALL_SECTIONS_USE_CLAIM_BOUNDARY_RECOMMENDATION_SET"
         warnings.append({"code": code, "message": f"Claim, boundary, and recommendation moves all appear in {all_three_coverage:.1%} of body sections; changing their order alone may not create rhetorical diversity."})
-        strong_codes.add(code)
+        if n_sections >= 8:
+            strong_codes.add(code)
 
-    if n_sections >= 8 and closure_boundary_coverage >= 0.80:
+    if n_sections >= 4 and closure_boundary_coverage >= 0.80:
         code = "T08_BOUNDARY_OR_RECOMMENDATION_CLOSURE_SATURATION"
         warnings.append({"code": code, "message": f"{closure_boundary_coverage:.1%} of section-final paragraphs contain boundary or recommendation language."})
-        strong_codes.add(code)
+
+    # High-risk zone warnings (review prompts calibrated for journal papers & bilingual reviews)
+    flagged_abstracts = [
+        ab for ab in high_risk_zones["abstracts"]
+        if ab["modern_pattern_total"] >= 2 or (ab["semicolons"] >= 3 and ab["modern_pattern_total"] >= 1)
+    ]
+    if flagged_abstracts:
+        code = "T09_ABSTRACT_SYNTHESIS_OR_ROADMAP"
+        langs = ", ".join(sorted({ab["language"] for ab in flagged_abstracts}))
+        warnings.append({
+            "code": code,
+            "message": f"Abstract block(s) ({langs}) contain dense modern roadmap/symmetry synthesis patterns; review for direct factual reporting.",
+        })
+
+    if high_risk_zones["counsel_clustered_sections"]:
+        code = "T10_COUNSEL_AND_HYPOTHETICAL_SATURATION"
+        sec_names = ", ".join(item["section"] for item in high_risk_zones["counsel_clustered_sections"][:4])
+        warnings.append({
+            "code": code,
+            "message": f"Modern conditional-counsel or symmetrical synthesis patterns cluster in section(s): {sec_names}.",
+        })
+
+    if high_risk_zones["narrative_captions"]:
+        code = "T11_NARRATIVE_CAPTION_RECAP"
+        warnings.append({
+            "code": code,
+            "message": f"{len(high_risk_zones['narrative_captions'])} figure/table note(s) contain extended narrative prose (>130 CJK chars or >75 EN words); keep captions focused on graphic symbols and abbreviations.",
+        })
+
+    if high_risk_zones["prose_heavy_table_rows"] >= 3:
+        code = "T12_PROSE_HEAVY_TABLE_ROWS"
+        warnings.append({
+            "code": code,
+            "message": f"{high_risk_zones['prose_heavy_table_rows']} table rows contain multi-clause prose summaries; prefer compact entity/metric phrases.",
+        })
 
     failures: list[dict[str, Any]] = []
     if anti_template_strict:
@@ -428,6 +644,7 @@ def build_report(raw_text: str, *, suffix: str = ".md", language: str = "auto", 
             "meta_adjudication_section_coverage": round(meta_section_coverage, 4),
             "meta_adjudication_hits": meta_hits,
         },
+        "high_risk_zones": high_risk_zones,
         "sections": section_rows,
         "warnings": warnings,
         "failures": failures,
@@ -491,6 +708,39 @@ def render_markdown(report: Mapping[str, Any], ui_language: str = "zh") -> str:
             ],
         ), "",
     ])
+
+    hrz = report.get("high_risk_zones") or {}
+    if hrz.get("abstracts") or hrz.get("counsel_clustered_sections") or hrz.get("narrative_captions") or hrz.get("table_row_count"):
+        hrz_rows: list[list[Any]] = []
+        for idx, ab in enumerate(hrz.get("abstracts", ()), 1):
+            pats = ", ".join(f"{h['phrase']}({h['count']})" for h in ab["modern_pattern_hits"]) or "—"
+            hrz_rows.append([
+                f"{'摘要' if zh else 'Abstract'} #{idx} ({ab['language']})",
+                f"{ab['characters']} chars; semicolons={ab['semicolons']}; patterns={pats}",
+            ])
+        for item in hrz.get("counsel_clustered_sections", ()):
+            pats = ", ".join(f"{h['phrase']}({h['count']})" for h in item["patterns"])
+            hrz_rows.append([
+                f"{'高密度推演章节' if zh else 'Counsel/synthesis cluster'}: {item['section']}",
+                pats,
+            ])
+        if hrz.get("narrative_captions"):
+            hrz_rows.append([
+                "长叙述图注/表注" if zh else "Narrative caption recap",
+                f"{len(hrz['narrative_captions'])} ({hrz['narrative_captions'][0]['excerpt']}...)",
+            ])
+        if hrz.get("table_row_count"):
+            hrz_rows.append([
+                "表格数据行 / 句子化行数" if zh else "Table data rows / prose-heavy rows",
+                f"{hrz['table_row_count']} / {hrz['prose_heavy_table_rows']}",
+            ])
+        lines.extend([
+            "## " + ("高危区块诊断（摘要 / 讨论转化 / 图注 / 表格）" if zh else "High-risk zone audit (abstracts / counsel / captions / tables)"),
+            "",
+            _table(["区块" if zh else "Zone", "观察信号" if zh else "Observed signals"], hrz_rows),
+            "",
+        ])
+
     if report["failures"]:
         lines.extend(["## " + ("失败项" if zh else "Failures"), ""])
         for item in report["failures"]:
@@ -525,7 +775,13 @@ def build_parser() -> argparse.ArgumentParser:
 def main(argv: Sequence[str] | None = None) -> int:
     args = build_parser().parse_args(argv)
     source = read_source(args.source)
-    report = build_report(source.text, suffix=source.suffix, language=args.language, anti_template_strict=args.anti_template_strict)
+    report = build_report(
+        source.text,
+        suffix=source.suffix,
+        language=args.language,
+        anti_template_strict=args.anti_template_strict,
+        blocks=source.blocks,
+    )
     if args.format == "json":
         print(json.dumps(report, ensure_ascii=False, indent=2))
     else:

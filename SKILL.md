@@ -3,7 +3,7 @@ name: academic-deai
 description: Edit Chinese or English academic prose for natural language, translation, and de-templating while preserving evidence, citations, author voice, and requested scope.
 license: MIT
 metadata:
-  version: "3.1.0"
+  version: "3.2.0"
 ---
 
 # Academic DeAI: academic prose editing
@@ -21,6 +21,8 @@ Protect substantive claims, numbers and units, citations and their attachment to
 - Read the complete editing unit before changing words: a short passage, or the affected section and adjoining transitions in a long manuscript. Identify what its paragraphs do and how claims, evidence, and qualifications connect.
 - If the user supplies a voice sample, use its deliberate rhythm, terminology, punctuation, and argument progression within the requested scholarly format. Without a sample, follow the manuscript's discipline, audience, and section function.
 - Prioritize empty framing, unsupported importance, repeated rhetorical contrasts, redundant closers, and uniform paragraph architecture before isolated vocabulary. A sentence should serve a reader function; necessary definitions, summaries, and methodological repetition may remain.
+- Anchor high-risk sections—especially **Abstracts (both Chinese and English), Discussions, Translational/Clinical Outlooks, and Conclusions**—in concrete studies, models, samples, molecules, endpoints, or timepoints. Replace meta-roadmap verb stacks (`We first summarize... Three axes are discussed...` / `本文梳理……从……角度提供了参考`), participial tail stacks (`, highlighting / involving / alongside ...`), hyper-compressed symmetrical synthesis sentences (`在A中……，在B中却……；既……又……`), and speculative conditional-counsel chains (`面临两道难题……如果……均有可能……因此需要……`) with direct factual reporting.
+- Treat embedded secondary-language blocks (such as an English abstract inside a Chinese journal paper), figure legends, and table cells as distinct editing units. Keep figure legends graphic-first (1 concise core line + symbol conventions + abbreviation key, not a mini-abstract recap), and keep table cells concise and data/entity-driven rather than compressed parallel sentences.
 - Treat passive voice, formal words, punctuation, short sentences, and three-item lists as weak clues. Edit them only when their context shows redundancy, obscured meaning, or an unwanted recurring pattern. Keep genuine comparisons, negative findings, scope limits, standard terminology, and required formats.
 - Rewrite an awkward passage around its actual point when phrase-by-phrase fixes fail, within the authorized depth. Vary structure because its information requires it; do not manufacture irregularity or replace every section with a mechanism–limitation–future-work template.
 - Compare the changed claims with the source, then review surviving structural repetition. Make another pass only to resolve a specific remaining problem. Stylistic signals are not authorship evidence; do not promise AI-detector scores.
@@ -41,8 +43,8 @@ Run existing tools directly; use `--help` for arguments and inspect source only 
 |---|---|
 | Compare numbers, citations, terminology, and stance in a substantial edit | `scripts/content_lock.py` or `scripts/revision_guard.py`; choose one suited to the input |
 | Check length, retained sections, placeholders, and revision constraints | `scripts/revision_gate.py` |
-| Diagnose formulaic prose when requested | `scripts/style_audit.py` |
-| Investigate repetitive rhetorical structure in a long review | `scripts/rhetorical_texture.py` |
+| Diagnose formulaic prose, modern CN/EN synthesis templates, and embedded bilingual blocks | `scripts/style_audit.py` |
+| Investigate repetitive rhetorical structure, DOCX numbered sections, abstracts, counsel clusters, captions, and tables | `scripts/rhetorical_texture.py` |
 
 For a short edit, direct source comparison usually suffices. For a substantial or consequential revision, use only the checks relevant to changed protected content and structural constraints, then review semantic fidelity. Tool warnings require a contextual decision; explicit length or content violations require resolution. A script pass does not prove unchanged meaning. Stop verification when the applicable checks pass and no concrete issue remains.
 

@@ -13,6 +13,7 @@ from style_patterns import (
     EN_ABBREVIATIONS,
     EN_BOOSTERS,
     EN_HEDGES,
+    EN_MODERN_AI_PATTERNS,
     EN_STOCK_PATTERNS,
     EN_STOPWORDS,
     EN_TRANSITIONS,
@@ -21,11 +22,12 @@ from style_patterns import (
     ZH_BOOSTERS,
     ZH_FUNCTION_CHARS,
     ZH_HEDGES,
+    ZH_MODERN_AI_PATTERNS,
     ZH_STOCK_PATTERNS,
     ZH_TRANSITIONS,
 )
 
-VERSION = "1.1.0"
+VERSION = "1.2.0"
 
 
 def clean_text(text: str, suffix: str) -> str:
@@ -98,6 +100,17 @@ def detect_language(text: str) -> str:
         return "zh"
     if latin_words >= max(10, int(cjk_tokens * 2.0)):
         return "en"
+    return "mixed"
+
+
+def detect_block_language(block: str) -> str:
+    """Classify one paragraph block cleanly for per-block bilingual auditing."""
+    cjk_count = len(CJK_RE.findall(block))
+    latin_count = len(LATIN_WORD_RE.findall(block))
+    if latin_count >= 18 and latin_count >= cjk_count * 3:
+        return "en"
+    if cjk_count >= 18 and cjk_count >= latin_count * 1.5:
+        return "zh"
     return "mixed"
 
 
@@ -341,6 +354,50 @@ def lexical_metrics(tokens: Sequence[str], language: str) -> dict[str, Any]:
     }
 
 
+def audit_bilingual_secondary_blocks(
+    paragraphs: Sequence[str],
+    primary_language: str,
+    max_items: int,
+) -> dict[str, Any] | None:
+    """Audit embedded secondary-language blocks (e.g., English abstract inside a ZH paper)."""
+    if primary_language not in {"zh", "en"}:
+        return None
+    secondary = "en" if primary_language == "zh" else "zh"
+    matched_blocks = [p for p in paragraphs if detect_block_language(p) == secondary]
+    if not matched_blocks:
+        return None
+
+    joined = "\n\n".join(matched_blocks)
+    sentences = split_sentences(matched_blocks)
+    if secondary == "en":
+        token_count = len(LATIN_WORD_RE.findall(joined))
+        if token_count < 20:
+            return None
+        stock = count_patterns(joined, EN_STOCK_PATTERNS, max_items)
+        modern = count_patterns(joined, EN_MODERN_AI_PATTERNS, max_items)
+        transitions = count_terms(joined, EN_TRANSITIONS, "en", max_items)
+        triads = triadic_candidates(sentences, "en")
+    else:
+        token_count = len(CJK_RE.findall(joined))
+        if token_count < 20:
+            return None
+        stock = count_patterns(joined, ZH_STOCK_PATTERNS, max_items)
+        modern = count_patterns(joined, ZH_MODERN_AI_PATTERNS, max_items)
+        transitions = count_terms(joined, ZH_TRANSITIONS, "zh", max_items)
+        triads = triadic_candidates(sentences, "zh")
+
+    return {
+        "secondary_language": secondary,
+        "paragraphs": len(matched_blocks),
+        "characters": len(joined),
+        "tokens": token_count,
+        "stock_phrases": stock,
+        "modern_patterns": modern,
+        "transitions": transitions,
+        "triadic_list_candidate_count": len(triads),
+    }
+
+
 def build_report(
     text: str,
     language: str,
@@ -356,6 +413,7 @@ def build_report(
 
     if language == "zh":
         stock_patterns = ZH_STOCK_PATTERNS
+        modern_patterns = ZH_MODERN_AI_PATTERNS
         transitions = ZH_TRANSITIONS
         hedges = ZH_HEDGES
         boosters = ZH_BOOSTERS
@@ -363,6 +421,7 @@ def build_report(
         paragraph_opening_width = 5
     elif language == "en":
         stock_patterns = EN_STOCK_PATTERNS
+        modern_patterns = EN_MODERN_AI_PATTERNS
         transitions = EN_TRANSITIONS
         hedges = EN_HEDGES
         boosters = EN_BOOSTERS
@@ -370,6 +429,7 @@ def build_report(
         paragraph_opening_width = 4
     else:
         stock_patterns = EN_STOCK_PATTERNS + ZH_STOCK_PATTERNS
+        modern_patterns = EN_MODERN_AI_PATTERNS + ZH_MODERN_AI_PATTERNS
         transitions = EN_TRANSITIONS + ZH_TRANSITIONS
         hedges = EN_HEDGES + ZH_HEDGES
         boosters = EN_BOOSTERS + ZH_BOOSTERS
@@ -377,6 +437,22 @@ def build_report(
         paragraph_opening_width = 4
 
     triads = triadic_candidates(sentences, language)
+    modern_hits = count_patterns(text, modern_patterns, max_items)
+    secondary_audit = audit_bilingual_secondary_blocks(paragraphs, language, max_items)
+
+    formulaic_block: dict[str, Any] = {
+        "stock_phrases": count_patterns(text, stock_patterns, max_items),
+        "transitions": count_terms(text, transitions, language, max_items),
+        "hedges": count_terms(text, hedges, language, max_items),
+        "boosters": count_terms(text, boosters, language, max_items),
+        "triadic_list_candidate_count": len(triads),
+        "triadic_list_examples": triads[:max_items],
+    }
+    if modern_hits:
+        formulaic_block["modern_patterns"] = modern_hits
+    if secondary_audit is not None:
+        formulaic_block["bilingual_secondary_audit"] = secondary_audit
+
     report: dict[str, Any] = {
         "tool": {
             "name": "academic-prose-pattern-audit",
@@ -408,14 +484,7 @@ def build_report(
             ),
             "repeated_ngrams": repeated_ngrams(text, language, max_items),
         },
-        "formulaic_language": {
-            "stock_phrases": count_patterns(text, stock_patterns, max_items),
-            "transitions": count_terms(text, transitions, language, max_items),
-            "hedges": count_terms(text, hedges, language, max_items),
-            "boosters": count_terms(text, boosters, language, max_items),
-            "triadic_list_candidate_count": len(triads),
-            "triadic_list_examples": triads[:max_items],
-        },
+        "formulaic_language": formulaic_block,
         "punctuation": punctuation_metrics(text, len(tokens)),
         "lexical": lexical_metrics(tokens, language),
         "interpretation_rules": [

@@ -4,6 +4,7 @@ from __future__ import annotations
 
 from typing import Any, Sequence
 
+
 def format_number(value: Any) -> str:
     if value is None:
         return "—"
@@ -175,12 +176,13 @@ def render_markdown(report: dict[str, Any], ui_language: str) -> str:
     wording_rows: list[list[Any]] = []
     category_names = {
         "stock_phrases": "套话" if zh else "Stock phrase",
+        "modern_patterns": "现代综合模板" if zh else "Modern synthesis pattern",
         "transitions": "过渡词" if zh else "Transition",
         "hedges": "限制词" if zh else "Hedge",
         "boosters": "加强词" if zh else "Booster",
     }
-    for key in ("stock_phrases", "transitions", "hedges", "boosters"):
-        for item in formulaic[key]:
+    for key in ("stock_phrases", "modern_patterns", "transitions", "hedges", "boosters"):
+        for item in formulaic.get(key, ()):
             phrase = item.get("phrase", item.get("term", ""))
             wording_rows.append([category_names[key], phrase, item["count"]])
     if wording_rows:
@@ -201,6 +203,44 @@ def render_markdown(report: dict[str, Any], ui_language: str) -> str:
     )
     for item in formulaic["triadic_list_examples"]:
         sections.append(f"- {item['sentence']}")
+
+    secondary = formulaic.get("bilingual_secondary_audit")
+    if secondary:
+        sec_heading = (
+            "### 嵌套双语区块审计" if zh else "### Embedded secondary-language block audit"
+        )
+        sections.extend(["", sec_heading, ""])
+        sec_rows: list[list[Any]] = [
+            [
+                "次语种" if zh else "Secondary language",
+                secondary["secondary_language"],
+            ],
+            [
+                "段落数 / 词元数" if zh else "Paragraphs / tokens",
+                f"{secondary['paragraphs']} / {secondary['tokens']}",
+            ],
+            [
+                "三项并列候选" if zh else "Triadic candidates",
+                secondary["triadic_list_candidate_count"],
+            ],
+        ]
+        for key, label_zh, label_en in (
+            ("stock_phrases", "次语种套话", "Secondary stock phrases"),
+            ("modern_patterns", "次语种现代模板", "Secondary modern patterns"),
+            ("transitions", "次语种过渡词", "Secondary transitions"),
+        ):
+            hits = secondary.get(key, ())
+            if hits:
+                joined = ", ".join(
+                    f"{h.get('phrase', h.get('term', ''))} ({h['count']})" for h in hits
+                )
+                sec_rows.append([label_zh if zh else label_en, joined])
+        sections.append(
+            markdown_table(
+                [labels["category"], "内容" if zh else "Detail"],
+                sec_rows,
+            )
+        )
 
     sections.extend(["", punctuation_heading, ""])
     punct_rows = []

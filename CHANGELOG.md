@@ -1,5 +1,13 @@
 # Changelog
 
+## 3.2.0 — 2026-11-21
+
+- Expanded both English and Chinese pattern libraries (`scripts/style_patterns.py`, `references/source-patterns.md`, `references/bilingual-and-translation.md`) beyond legacy clichés to cover modern synthesis templates: English meta-roadmap review leads, participial tail stacking, paired `versus` contrasts, and generic translational closers; Chinese symmetrical compression sentences, two-hurdle/conditional-counsel prose, meta-summary verbs, and redundant full-mechanism recaps.
+- Added automatic per-block bilingual auditing in `scripts/style_metrics.py` and `scripts/style_render.py` (`1.2.0`) so embedded secondary-language blocks (such as English abstracts inside Chinese journal manuscripts) are audited rather than skipped by document-level language detection.
+- Upgraded `scripts/text_io.py` with structured DOCX block classification (`prose`, `heading`, `abstract`, `caption`, `table_row`, `reference`) while preserving backward-compatible `extract_docx()`.
+- Upgraded `scripts/rhetorical_texture.py` (`1.1.0`) to parse plain-text/DOCX numbered headings (`1`, `2.1`, `一、`), exclude trailing bibliographies automatically, lower journal-paper warning coverage to 4+ sections, and audit high-risk zones (`T09` abstracts, `T10` conditional-counsel clusters, `T11` narrative figure captions, `T12` prose-heavy table rows).
+- Added figure-legend and three-line-table de-templating rules to `SKILL.md` and `references/paper-types.md`, plus unit tests covering all new CN/EN, bilingual, and DOCX behaviors.
+
 ## 3.1.0 — 2026-10-04
 
 - Reframed the skill for the latest models across Agent platforms that support Skills or can load its instructions and references.
