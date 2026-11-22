@@ -4,7 +4,7 @@
 
 减少空泛开头、重复收尾和机械段落，同时核对事实、数字、引文、术语、证据强度与作者声音。可用于论文校对、语言润色、学术翻译和授权范围内的结构修订。
 
-**Version: 3.1.0 · MIT 开源 · 模型中立的 Agent Skill**
+**Version: 3.2.0 · MIT 开源 · 模型中立的 Agent Skill**
 
 Academic DeAI is a model-agnostic skill for Chinese and English academic editing, designed for the latest models across Agent platforms. It reduces formulaic framing and repetitive structure while protecting evidence, citations, and the author's intended claims.
 
