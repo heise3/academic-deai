@@ -2,7 +2,8 @@
 """Audit formulaic patterns in academic prose without inferring AI authorship.
 
 The script reports descriptive signals such as sentence/paragraph length variation,
-repeated openings, stock phrases, triadic-list candidates, and punctuation density.
+repeated openings, stock phrases, modern CN/EN synthesis patterns, embedded
+bilingual abstract/block signals, triadic-list candidates, and punctuation density.
 It intentionally does not output an AI probability or detector score.
 """
 
@@ -16,6 +17,7 @@ from typing import Sequence
 from style_metrics import VERSION, build_report, clean_text, detect_language
 from style_render import render_markdown
 from text_io import read_source
+
 
 def parse_args(argv: Sequence[str] | None = None) -> argparse.Namespace:
     parser = argparse.ArgumentParser(
@@ -60,6 +62,11 @@ def parse_args(argv: Sequence[str] | None = None) -> argparse.Namespace:
         default=4,
         help="Ignore paragraph-like blocks shorter than this many tokens (default: 4).",
     )
+    parser.add_argument(
+        "--include-references",
+        action="store_true",
+        help="Include detected DOCX reference blocks in prose metrics (excluded by default).",
+    )
     parser.add_argument("--version", action="version", version=f"%(prog)s {VERSION}")
     args = parser.parse_args(argv)
     if args.max_items < 1:
@@ -68,11 +75,17 @@ def parse_args(argv: Sequence[str] | None = None) -> argparse.Namespace:
         parser.error("--min-paragraph-tokens must be at least 1")
     return args
 
+
 def main(argv: Sequence[str] | None = None) -> int:
     args = parse_args(argv)
     try:
         source = read_source(args.path)
-        text = clean_text(source.text, source.suffix)
+        raw_text = source.text
+        if source.blocks and not args.include_references:
+            non_ref_blocks = [b.text for b in source.blocks if b.kind != "reference"]
+            if non_ref_blocks:
+                raw_text = "\n\n".join(non_ref_blocks)
+        text = clean_text(raw_text, source.suffix)
         if not text.strip():
             raise ValueError("No analyzable text remained after extraction and cleanup.")
         language = detect_language(text) if args.language == "auto" else args.language
@@ -90,6 +103,7 @@ def main(argv: Sequence[str] | None = None) -> int:
     except (OSError, ValueError, RuntimeError) as exc:
         print(f"error: {exc}", file=sys.stderr)
         return 2
+
 
 if __name__ == "__main__":
     raise SystemExit(main())
